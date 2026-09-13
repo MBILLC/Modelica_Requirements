@@ -1,0 +1,5 @@
+# Rendered reports are reproducible from a run; the case list, ReferenceResults/
+# and Results/ beside this file are the data. See ModCheck/Resources/HOWTO.md.
+HtmlReports/
+InteractiveReports/
+NotebookReports/
