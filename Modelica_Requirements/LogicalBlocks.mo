@@ -1051,7 +1051,28 @@ results in
             fillPattern=FillPattern.Solid,
             textString="stop",
             horizontalAlignment=TextAlignment.Left)}),             Diagram(
-          coordinateSystem(preserveAspectRatio=false)));
+          coordinateSystem(preserveAspectRatio=false)),
+      Documentation(info="<html>
+<p>
+The simulation is terminated with message <code>text</code> when the Boolean input <code>u</code>
+has a falling edge. With the default <code>delay = 0</code> this happens at the edge itself.
+</p>
+
+<p>
+Some tools store only the state before the event at the instant a simulation is terminated, and
+a verdict that a requirement block takes at that same edge is then missing from the result
+(Modelon Impact does this). Setting <code>delay</code> (Advanced tab) to a small positive time,
+one output interval say, terminates the simulation that much later, and the verdict is recorded.
+Dymola and OpenModelica record the values at the edge and need no delay.
+</p>
+</html>", revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Parameter <code>delay</code> added: terminate a fixed time after the edge, for tools that do not record the edge's own values at termination (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
+</html>"));
   end FallingEdgeTerminate;
   annotation (Icon(graphics={
                           Line(

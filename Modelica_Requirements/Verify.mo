@@ -85,6 +85,23 @@ blocks write their status at the end of the simulation (whether a Requirement is
 or Untested). Furthermore, the PrintViolations block reads this log-file at the end of
 the simulation and prints a summary to the output window.
 </p>
+
+<p>
+The verdict is taken and printed when <code>terminal()</code> becomes true. A tool that does not
+support <code>terminal()</code> (Modelon Impact evaluates it to <code>false</code>) never prints it.
+For such a tool, set <code>useEvaluationTime = true</code> and <code>evaluationTime</code> to the instant
+the verdict shall be taken at, normally the simulation stop time (both on the Advanced tab). Every
+example of this library sets <code>evaluationTime</code> to its StopTime, so that it prints in either
+kind of tool once <code>useEvaluationTime</code> is switched on; with the default
+<code>useEvaluationTime = false</code> the parameter has no effect.
+</p>
+</html>", revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Parameters <code>useEvaluationTime</code> and <code>evaluationTime</code> added: opt-in verdict at a fixed instant for tools without <code>terminal()</code> (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
 </html>"));
   end PrintViolations;
 
