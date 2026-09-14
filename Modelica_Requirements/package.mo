@@ -1,5 +1,5 @@
 within ;
-package Modelica_Requirements "Modelica_Requirements (Version 0.6) - Defining requirements formally and checking them when simulating"
+package Modelica_Requirements "Modelica_Requirements (Version 0.7.1) - Defining requirements formally and checking them when simulating"
   extends Modelica.Icons.Package;
 
 
@@ -8,6 +8,134 @@ package UsersGuide "User's Guide"
 
 package ReleaseNotes "Release notes"
   extends Modelica.Icons.ReleaseNotes;
+
+  class Version_0_7_1 "Version 0.7.1 (Sept. 14, 2026)"
+  extends Modelica.Icons.ReleaseNotes;
+
+    annotation (Documentation(info="<html>
+<p>
+Maintenance release. The library now runs in a third Modelica tool, Modelon Impact, and
+its examples have been simulated with Dymola, OpenModelica and Modelon Impact and compared
+tool against tool. No requirement semantics changed: every change below was checked to
+leave the Dymola and OpenModelica results of every example unchanged.
+</p>
+
+<h4>Changes</h4>
+<ul>
+<li> <code>uses(Modelica(version=\"4.1.0\"))</code>. No change in the library was needed for
+     the Modelica Standard Library 4.1.0.</li>
+
+<li> <a href=\"modelica://Modelica_Requirements.Verify.PrintViolations\">PrintViolations</a> has two new parameters on its Advanced tab,
+     <code>useEvaluationTime</code> (default <code>false</code>) and <code>evaluationTime</code>.
+     The verdict of a requirement model is taken and printed at <code>terminal()</code>; a tool that
+     does not support <code>terminal()</code> (Modelon Impact evaluates it to <code>false</code>) never
+     printed it. With <code>useEvaluationTime = true</code> the verdict is taken at
+     <code>evaluationTime</code> instead. <a href=\"modelica://Modelica_Requirements.Interfaces.PartialVerify\">PartialVerify</a> passes both
+     parameters through and <a href=\"modelica://Modelica_Requirements.Interfaces.PartialRequirement\">PartialRequirement</a> reads them from the
+     inner <code>printViolations</code>. Every example sets <code>evaluationTime</code> to its StopTime,
+     so switching the option on is all such a tool needs; with the default the behaviour is as before.</li>
+
+<li> <a href=\"modelica://Modelica_Requirements.LogicalBlocks.FallingEdgeTerminate\">FallingEdgeTerminate</a> has a new parameter
+     <code>delay</code> (default 0, Advanced tab): the simulation terminates that long after the falling
+     edge instead of at it. A tool that stores only the pre-event state at a <code>terminate()</code>
+     instant (Modelon Impact) otherwise drops the verdict a requirement block takes at that very
+     edge from its result. Dymola and OpenModelica record the edge's values and need no delay.</li>
+
+<li> <a href=\"modelica://Modelica_Requirements.ChecksInFixedWindow_withFFT\">ChecksInFixedWindow_withFFT</a> did not run in
+     Modelon Impact at all (the branch of an earlier port notes this). Four independent causes, each
+     fixed in a form that leaves Dymola and OpenModelica bit-identical:
+     <ol>
+     <li> <code>Internal.checkDomain</code> declared local arrays <code>diff[:]</code>, <code>f[:]</code>.
+          A function's local array needs a size that follows from its inputs; Impact refuses an
+          undefined size. Both are now sized <code>size(A,1)</code>, the checked band is the slice
+          <code>1:n</code>, and the division by the limit curve's maximum is guarded against an
+          all-zero curve.</li>
+     <li> <code>Internal.PartialFFT</code> starts its sampling chain through the edge
+          <code>condition and not pre(condition)</code>, relying on the initial equation
+          <code>pre(condition) = false</code> for a condition that is already true at
+          initialization. A tool that initializes <code>pre(condition)</code> to the condition's own
+          value never sees that edge, and the block was dead for the whole run. The start is now
+          explicit: <code>(condition and not pre(condition)) or (initial() and condition)</code>.</li>
+     <li> The FFT examples stop through <code>FallingEdgeTerminate</code> at the instant their
+          FFT is evaluated; without the new <code>delay</code>, Impact's result did not contain the
+          verdict.</li>
+     <li> <a href=\"modelica://Modelica_Requirements.ChecksInFixedWindow_withFFT.WithinRelativeDomain\">WithinRelativeDomain</a> and
+          <a href=\"modelica://Modelica_Requirements.ChecksInFixedWindow_withFFT.MaxTotalHarmonicDistortion\">MaxTotalHarmonicDistortion</a> evaluated
+          their chain (base frequency, scaled limit curve or THD, check, icon curves) as eight
+          equations in one when-clause. A tool that evaluates a when-body with the pre-event values
+          of the variables assigned in that same when-clause (Impact, measured with an eleven-line
+          model) checked the FFT against a limit curve scaled by the previous base amplitude, zero
+          before the first FFT, and reported Violated for a satisfied requirement. Split over
+          several when-clauses with the same condition, the same tool built a nonlinear block around
+          them and failed its initialization in a fraction of the runs. The chain is now one
+          function call, <code>Internal.checkRelativeDomain</code> and <code>Internal.checkTHD</code>.</li>
+     </ol></li>
+
+<li> <a href=\"modelica://Modelica_Requirements.LogicalFunctions.card\">card</a>, <code>cardSatisfied</code>,
+     <code>cardUndecided</code>, <code>cardViolated</code>: the reduction is written over the indices,
+     <code>sum(if p[i] == ... then 1 else 0 for i in 1:size(p, 1))</code>, instead of over the elements.
+     The same count; Modelon Impact fails to scalarize the element form (\"Exception caught while
+     scalarizing function cardSatisfied\"), which took
+     <code>Examples.AircraftRequirements.MinimumOperationalServiceLife</code> down with it.</li>
+</ul>
+
+<h4>Three tools compared</h4>
+<p>
+All 68 example models under <a href=\"modelica://Modelica_Requirements.Examples\">Examples</a> that carry an
+<code>experiment</code> annotation were simulated with each tool with that annotation's StopTime and
+Interval, CVode, a relative tolerance of 1e-6 (the annotation's Tolerance where it has one), and every
+block output <code>*.y</code> was compared between tools on the output grid (an absolute
+tolerance of 1e-3 of each signal's range, or its switching instants for a Boolean or Property
+signal). The regression harness used is
+<a href=\"https://github.com/MBILLC/ModCheck\">ModCheck</a>; the case lists, the stored results of
+the three tools and the reports are kept beside it, not in this library.
+</p>
+
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Tool</th><th>Examples simulated</th><th>Not simulated, and why</th></tr>
+<tr><td valign=\"top\">Dymola 2026x</td>
+    <td valign=\"top\">60</td>
+    <td valign=\"top\">8 refused by the license used for the comparison (\"the model is too
+        complex for the current license\", about 1000 unknowns): <code>MainPowerSupplyRequirements</code>,
+        <code>LimitedCabinAltitudeRateOfChange</code>, four of the six FFT examples,
+        <code>CheckMotorWithLosses</code>, <code>CheckPumpingSystem</code>. Not a library problem.</td></tr>
+<tr><td valign=\"top\">OpenModelica 1.27.1</td>
+    <td valign=\"top\">46</td>
+    <td valign=\"top\">22 do not build: the 14 examples using a sliding-window block
+        (\"No runtime support for this record assignment\" for the buffer record returned by
+        <code>Internal.SlidingWindow.push</code>), the 6 FFT examples
+        (\"Internal error BackendDAECreate.lowerWhenEqn: equation not handled\"), and the 2 examples
+        that pass a model instance to a function (see below).</td></tr>
+<tr><td valign=\"top\">Modelon Impact (Sept. 2026)</td>
+    <td valign=\"top\">66 (61 of them with a reference to compare against)</td>
+    <td valign=\"top\">2 do not compile, the two examples that pass a model instance to a function (see below).</td></tr>
+</table>
+
+<p>
+<b>OpenModelica against Dymola</b>, on the 45 examples both simulate: every continuous signal
+agrees to better than 1e-4 of its range (most to 1e-13 or exactly), and every Boolean and Property
+signal switches at identical instants in both tools; the only grid points that differ are those
+instants themselves, sampled on opposite sides of the event. One example,
+<code>SimplePumpingSystem.Components.PumpingSystem</code>, is an on-off pressure controller over
+2000 s whose switching instants move with the tolerance, within one tool as between two.
+</p>
+
+<p>
+<b>Modelon Impact against Dymola</b> (and against OpenModelica for the one example Dymola's license
+refused and OpenModelica builds): on the 61 examples with a reference, all 275 signal checks pass. The 79 continuous signals lie inside their tolerance tube everywhere (a funnel error of exactly 0); of the 193 signals compared at their final value, 190 are identical and the other three agree to 5e-9; the relay signals of <code>PumpingSystem</code> agree by accumulated difference within the tolerance measured for Dymola against itself. The other 5 examples Impact simulates (<code>MainPowerSupplyRequirements</code> and four FFT examples) have no reference from either other tool.
+</p>
+
+<h4>Known limitation</h4>
+<p>
+<code>Examples.MotorsWithLosses</code> (<code>watchDCMotor(obj=dcpm1)</code>) and
+<code>Examples.SimplePumpingSystem.CheckPumpingSystem</code>
+(<code>SourceObservation_from_PartialSource(partialSource=source)</code>) pass a model instance to a
+function whose input is a record. The Modelica Language Specification (3.6, section 12.6.1) allows this
+only as an explicit record constructor call, <code>R(m)</code>; the implicit form is a Dymola extension.
+OpenModelica and Modelon Impact reject both examples, and they are left as they are in this release.
+</p>
+</html>"));
+  end Version_0_7_1;
 
   class Version_0_7_0 "Version 0.7.0 (Feb. 13, 2025)"
   extends Modelica.Icons.ReleaseNotes;
@@ -115,9 +243,9 @@ end UsersGuide;
 
   annotation (preferredView="info",
   uses(Modelica(version="4.1.0")),
-version="0.7",
-versionDate="2025-02-13",
-dateModified = "2025-02-13",
+version="0.7.1",
+versionDate="2026-09-14",
+dateModified = "2026-09-14",
 revisionId="$Id:: package.mo 9390 2016-06-21 06:35:11Z #$",
 Documentation(info="<html>
 <p>

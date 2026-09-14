@@ -858,6 +858,13 @@ For an example to use the Requirement block in graphical form, see
 For an example to use the Requirement block in textual form, see
 <a href=\"modelica://Modelica_Requirements.Examples.Textual.Elementary.Verify.Requirement\">Examples.Textual.Elementary.Verify.Requirement</a>.
 </p>
+</html>", revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> The instant the verdict is taken at comes from the inner <code>printViolations</code>: <code>terminal()</code>, or <code>evaluationTime</code> when its <code>useEvaluationTime</code> is set (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
 </html>"));
   end PartialRequirement;
 
@@ -959,6 +966,19 @@ from this block.
             horizontalAlignment=TextAlignment.Left,
             textString="%%")}),
     Documentation(info="<html>
+<p>
+Base class of a model that verifies requirements: it carries the inner
+<a href=\"modelica://Modelica_Requirements.Verify.PrintViolations\">PrintViolations</a> block and
+exposes its parameters. <code>useEvaluationTime</code> and <code>evaluationTime</code> are passed
+through for tools that do not support <code>terminal()</code>; see PrintViolations.
+</p>
+</html>", revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Parameters <code>useEvaluationTime</code> and <code>evaluationTime</code> passed through to the inner PrintViolations (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
 </html>"));
   end PartialVerify;
 

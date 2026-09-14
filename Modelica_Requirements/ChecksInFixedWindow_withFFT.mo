@@ -475,6 +475,8 @@ As can be seen, the first FFT fulfills the check (scaledDistance = 0), whereas t
      The research leading to these results has received funding from the European Union’s Seventh
      Framework Programme (FP7/2007-2016) for the Clean Sky Joint Technology Initiative under
      grant agreement no. CSJU-GAM-SGO-2008-001.</td></tr>
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> The whole evaluation at an FFT instant is one function call (<code>Internal.checkRelativeDomain</code>) instead of eight equations in a when-clause: a tool that evaluates a when-body with the pre-event values of the variables assigned in that same when-clause (Modelon Impact) checked the FFT against a limit curve scaled by the previous base amplitude. Results in Dymola and OpenModelica are unchanged (H. Tummescheit, Model Based Innovation LLC)</td></tr>
 </table>
 </html>"));
   end WithinRelativeDomain;
@@ -757,6 +759,8 @@ As can be seen, the first FFT fulfills the check (THD &lt; THDmax), whereas the 
      The research leading to these results has received funding from the European Union’s Seventh
      Framework Programme (FP7/2007-2016) for the Clean Sky Joint Technology Initiative under
      grant agreement no. CSJU-GAM-SGO-2008-001.</td></tr>
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> The whole evaluation at an FFT instant is one function call (<code>Internal.checkTHD</code>), for the reason given at <a href=\"modelica://Modelica_Requirements.ChecksInFixedWindow_withFFT.WithinRelativeDomain\">WithinRelativeDomain</a>. Results in Dymola and OpenModelica are unchanged (H. Tummescheit, Model Based Innovation LLC)</td></tr>
 </table>
 </html>"));
   end MaxTotalHarmonicDistortion;
@@ -919,6 +923,8 @@ As can be seen, the first FFT fulfills the check (THD &lt; THDmax), whereas the 
      The research leading to these results has received funding from the European Union’s Seventh
      Framework Programme (FP7/2007-2016) for the Clean Sky Joint Technology Initiative under
      grant agreement no. CSJU-GAM-SGO-2008-001.</td></tr>
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> A condition that is already true at initialization starts the FFT explicitly (<code>initial() and condition</code>): a tool that initializes <code>pre(condition)</code> to the condition's own value instead of honouring the initial equation <code>pre(condition) = false</code> (Modelon Impact) never saw the edge and the block stayed dead for the whole run (H. Tummescheit, Model Based Innovation LLC)</td></tr>
 </table>
 </html>"));
       end PartialFFT;
@@ -1081,6 +1087,8 @@ for why this is one function rather than several equations in a when-clause.</p>
      The research leading to these results has received funding from the European Union’s Seventh
      Framework Programme (FP7/2007-2016) for the Clean Sky Joint Technology Initiative under
      grant agreement no. CSJU-GAM-SGO-2008-001.</td></tr>
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Local arrays <code>diff</code> and <code>f</code> sized by the input <code>A</code> instead of <code>[:]</code>, the checked band as the slice <code>1:n</code>; division by the limit curve's maximum guarded against an all-zero curve. Modelon Impact refuses a local array of undefined size (H. Tummescheit, Model Based Innovation LLC)</td></tr>
 </table>
 </html>"));
     end checkDomain;
@@ -1642,6 +1650,10 @@ for why this is one function rather than several equations in a when-clause.</p>
      The research leading to these results has received funding from the European Union’s Seventh
      Framework Programme (FP7/2007-2016) for the Clean Sky Joint Technology Initiative under
      grant agreement no. CSJU-GAM-SGO-2008-001.</td></tr>
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Functions <code>checkRelativeDomain</code> and <code>checkTHD</code> added (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Runs in Modelon Impact; see the <a href=\"modelica://Modelica_Requirements.UsersGuide.ReleaseNotes.Version_0_7_1\">release notes of version 0.7.1</a> for the four changes and the comparison with Dymola and OpenModelica (H. Tummescheit, Model Based Innovation LLC)</td></tr>
 </table>
 </html>"));
   end Internal;

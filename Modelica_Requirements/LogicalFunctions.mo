@@ -9,7 +9,7 @@ package LogicalFunctions
     input Boolean b[:] "Boolean vector";
     output Integer result "Number of true entries";
   algorithm
-    result :=sum(if e then 1 else 0 for e in b);
+    result :=sum(if b[i] then 1 else 0 for i in 1:size(b, 1));
     annotation(Inline=true, Documentation(info="<html>
 
 <h4>Syntax</h4>
@@ -42,6 +42,13 @@ nTrueElements = card( b )<br>
    </tr>
 </table>
 
+</html>", revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Reduction written over the indices <code>1:size(.,1)</code> instead of over the elements; the same count, and it compiles in Modelon Impact, which fails to scalarize the element form (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
 </html>"));
   end card;
 
@@ -612,7 +619,7 @@ results in
     input Property p[:] "Property vector";
     output Integer result "Number of Property.Satisfied entries";
   algorithm
-    result :=sum(if e == Property.Satisfied then 1 else 0 for e in p);
+    result :=sum(if p[i] == Property.Satisfied then 1 else 0 for i in 1:size(p, 1));
     annotation(Inline=true, Documentation(info="<html>
 
 <h4>Syntax</h4>
@@ -649,6 +656,13 @@ nSatisfied = cardSatisfied( p )<br>
     <td align=\"center\">simulation result</td>
    </tr>
 </table>
+</html>", revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Reduction written over the indices <code>1:size(.,1)</code> instead of over the elements; the same count, and it compiles in Modelon Impact, which fails to scalarize the element form (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
 </html>"));
   end cardSatisfied;
 
@@ -659,7 +673,7 @@ nSatisfied = cardSatisfied( p )<br>
     input Property p[:] "Property vector";
     output Integer result "Number of Property.Undecided entries";
   algorithm
-    result :=sum(if e == Property.Undecided then 1 else 0 for e in p);
+    result :=sum(if p[i] == Property.Undecided then 1 else 0 for i in 1:size(p, 1));
     annotation(Inline=true, Documentation(info="<html>
 
 <h4>Syntax</h4>
@@ -696,6 +710,13 @@ nUndecided = cardUndecided( p )<br>
     <td align=\"center\">simulation result</td>
    </tr>
 </table>
+</html>", revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Reduction written over the indices <code>1:size(.,1)</code> instead of over the elements; the same count, and it compiles in Modelon Impact, which fails to scalarize the element form (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
 </html>"));
   end cardUndecided;
 
@@ -706,7 +727,7 @@ nUndecided = cardUndecided( p )<br>
     input Property p[:] "Property vector";
     output Integer result "Number of Property.Violated entries";
   algorithm
-    result :=sum(if e == Property.Violated then 1 else 0 for e in p);
+    result :=sum(if p[i] == Property.Violated then 1 else 0 for i in 1:size(p, 1));
     annotation(Inline=true, Documentation(info="<html>
 
 <h4>Syntax</h4>
@@ -742,6 +763,13 @@ nViolated = cardViolated( p )<br>
 <tr><td></td>
     <td align=\"center\">simulation result</td>
    </tr>
+</table>
+</html>", revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> Reduction written over the indices <code>1:size(.,1)</code> instead of over the elements; the same count, and it compiles in Modelon Impact, which fails to scalarize the element form (H. Tummescheit, Model Based Innovation LLC)</td></tr>
 </table>
 </html>"));
   end cardViolated;
