@@ -12,20 +12,27 @@ package SimplePumpingSystem
 
     SimplePumpingSystem.Components.Requirements.TankRequirements tankRequirements(
         observationName="reservoir",
-        observation=Bindings.TankObservation_from_OpenTank( reservoir))
+        observation=Bindings.TankObservation_from_OpenTank(
+          Components.Requirements.Records.Tank(level=reservoir.level)))
       annotation (Placement(transformation(extent={{120,40},{140,60}})));
 
     SimplePumpingSystem.Components.Requirements.PumpRequirements pumpRequirements(
         observationName="pumps",
-        observation=Bindings.PumpObservation_from_PrescribedPump(pumps))
+        observation=Bindings.PumpObservation_from_PrescribedPump(
+          Bindings.Records.PrescribedPump(
+            N_in=pumps.N_in,
+            port_a=Bindings.Records.FluidPort_p(p=pumps.port_a.p),
+            port_b=Bindings.Records.FluidPort_p(p=pumps.port_b.p))))
       annotation (Placement(transformation(extent={{120,0},{140,20}})));
     Components.Requirements.SourceRequirements sourceRequirements1(
         observationName="source",
-        observation=Bindings.SourceObservation_from_PartialSource(source))
+        observation=Components.Requirements.Records.Source(
+          p={source.ports[i].p for i in 1:source.nPorts}))
       annotation (Placement(transformation(extent={{120,-40},{140,-20}})));
     Components.Requirements.SourceRequirements sourceRequirements2(
         observationName="sink",
-        observation=Bindings.SourceObservation_from_PartialSource(sink))
+        observation=Components.Requirements.Records.Source(
+          p={sink.ports[i].p for i in 1:sink.nPorts}))
       annotation (Placement(transformation(extent={{120,-82},{140,-62}})));
     annotation(experiment(StopTime=2000, Tolerance=1e-006),
       Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{160,
@@ -239,7 +246,6 @@ Simulate for 2000 s. When the valve is opened at time t=200, the pump starts tur
       package Records
         "Records containing observation variables used as inputs to the binding functions"
            extends Modelica.Icons.Package;
-
          record FluidPort_p
           "Observation variables from a Modelica.Fluid.Interfaces.FluidPort component (only pressure p)"
             extends Modelica.Icons.Record;
@@ -257,15 +263,20 @@ Simulate for 2000 s. When the valve is opened at time t=200, the pump starts tur
           Bindings.Records.FluidPort_p port_a "Connector variables at port_a";
           Bindings.Records.FluidPort_p port_b "Connector variables at port_b";
          end PrescribedPump;
-
-         record PartialSource
-          "Observation variables from a model derived from Modelica.Fluid.Sources.BaseClasses.PartialSource"
-            import NonSI = Modelica.Units.NonSI;
-            extends Modelica.Icons.Record;
-
-            // parameter Integer nPorts=0;
-          Bindings.Records.FluidPort_p ports[:] "Pressures at port";
-         end PartialSource;
+           annotation (Documentation(info="<html>
+<p>These records are filled at the call site with explicit record constructors,
+e.g. <code>PrescribedPump(N_in=pumps.N_in, port_a=FluidPort_p(p=pumps.port_a.p), ...)</code>.
+The Modelica Language Specification (section 12.6.1, casting to record) also
+allows the short form <code>PrescribedPump(pumps)</code>, and Dymola accepts it;
+OpenModelica 1.27 and Modelon Impact (OCT) do not, nor do they accept passing
+the instance itself. The explicit constructor is what all three run
+(measured 2026-09-14).</p>
+<p>The source and sink observations are built directly as
+<code>Requirements.Records.Source(p={source.ports[i].p for i in 1:source.nPorts})</code>,
+without a binding function: OpenModelica 1.27 silently returns zeros from a
+function whose result is a record with an array component when the call has
+parameter variability, which a fixed boundary's pressures have.</p>
+</html>"));
       end Records;
        extends Modelica.Icons.Package;
 
@@ -293,18 +304,6 @@ Simulate for 2000 s. When the valve is opened at time t=200, the pump starts tur
 
          annotation(Inline=true);
       end PumpObservation_from_PrescribedPump;
-
-      function SourceObservation_from_PartialSource
-        "Map PartialSource variables to Source observations record"
-        input Bindings.Records.PartialSource partialSource
-          "Observation variables from a PartialSource";
-        output Requirements.Records.Source sourceObservation=
-            Requirements.Records.Source(p=partialSource.ports.p)
-          "Source observation variables in requirements model";
-      algorithm
-
-         annotation(Inline=true);
-      end SourceObservation_from_PartialSource;
     end Bindings;
   end Components;
 end SimplePumpingSystem;
