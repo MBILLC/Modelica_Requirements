@@ -42,5 +42,11 @@ What it says:
 No verdict is issued by that comparison — there is no reference, only two
 runs — but nothing in it points at a disagreement about the models.
 
-Rendered reports (`HtmlReports*/`) are gitignored; rebuild with
-`restore_reports.py` or a run.
+Rendered reports (`HtmlReports*/`) are gitignored. To read the two tools'
+reports side by side, render both with `--aligned-batches`: pages are then cut
+by each case's slot in the list, so the same model sits on the same page at
+the same position in both, with a DISABLED or SKIPPED card where one tool
+could not run it:
+
+    python3 regression_testing.py --config regression_cases_modelica_requirements.yaml         --aligned-batches --html-report-dir HtmlReports
+    python3 regression_testing.py --config regression_cases_modelica_requirements_openmodelica.yaml         --aligned-batches --html-report-dir HtmlReports_OpenModelica
