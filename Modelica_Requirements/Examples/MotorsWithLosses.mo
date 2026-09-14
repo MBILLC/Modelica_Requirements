@@ -30,7 +30,15 @@ package MotorsWithLosses
              inertiaRotor=Components.InertiaData(w=DCPM_withLosses.dcpm2.inertiaRotor.w)))})
       annotation (Placement(transformation(extent={{60,60},{80,80}})));
 
-    annotation (experiment(StopTime=2));
+    annotation (experiment(StopTime=2),
+      Documentation(revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> The two motor instances are no longer passed to <code>watchDCMotor</code> themselves; the call site builds <code>Components.MotorData</code> with an explicit record constructor. Passing the instance is a Dymola extension, and the record cast <code>MotorData(dcpm1)</code> of the Modelica Language Specification (section 12.6.1) is implemented by Dymola alone; OpenModelica 1.27 and Modelon Impact run the explicit form (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
+</html>"));
   end CheckMotorWithLosses;
 
   package Components "Utility components needed for example"
@@ -47,6 +55,14 @@ package MotorsWithLosses
       Modelica.Units.SI.Voltage v annotation (Dialog);
       Modelica.Units.SI.Current i annotation (Dialog);
       Modelica.Units.SI.AngularVelocity w annotation (Dialog);
+      annotation (Documentation(revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> <code>VaNominal</code>, <code>IaNominal</code>, <code>wNominal</code> lose their <code>parameter</code> prefix. The record is built by <code>watchDCMotor</code>, and a record with parameter components returned by a function is continuous-time to Modelon Impact (a variability error) and over-determined to OpenModelica; Dymola alone takes it (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
+</html>"));
     end DCMotorWatching;
 
     block DCMotorRequirements "Requirements for one DC Motor"
@@ -74,7 +90,15 @@ package MotorsWithLosses
           color={255,0,255},
           smooth=Smooth.None));
       annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent=
-                {{-100,-100},{100,100}}), graphics));
+                {{-100,-100},{100,100}}), graphics),
+        Documentation(revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> The current limit is a <code>BooleanExpression</code>, <code>abs(watch.i) &lt;= 1.5*watch.IaNominal</code>, as the speed limit already was, instead of <code>Abs</code> and <code>LessEqualThreshold</code> blocks: <code>watch.IaNominal</code> is no longer a parameter and cannot bind a parameter threshold (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
+</html>"));
     end DCMotorRequirements;
 
     record InertiaData
@@ -115,7 +139,15 @@ the instance itself. The explicit constructor is what all three run
           i=obj.ia,
           w=obj.inertiaRotor.w) "Data in DCmotor format";
     algorithm
-      annotation(Inline=true);
+      annotation(Inline=true,
+        Documentation(revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> <code>MotorData</code> and <code>InertiaData</code> moved from the protected part of this function into the package, so that the call site can build them (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
+</html>"));
     end watchDCMotor;
 
     block Verify "Check requirements of OpenTanks and of Pumps"
