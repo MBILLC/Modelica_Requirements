@@ -6,7 +6,7 @@ model PreventHeatExchangerClogging
 
   parameter Modelica.Units.SI.Mass Mmax=8e-4;
 
-  inner Modelica_Requirements.Verify.PrintViolations printViolations
+  inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=3)
     annotation (Placement(transformation(extent={{-88,14},{-74,28}})));
   Modelica_Requirements.Verify.BooleanRequirement R_Clogging(text="To prevent clogging of the cold heat
 exchanger, the time integral of the product

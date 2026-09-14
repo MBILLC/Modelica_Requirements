@@ -770,7 +770,10 @@ into the top level of your model.");
   */
 
   algorithm
-    when not terminal() and change(localProperty) then
+    // The evaluation instant comes from the inner printViolations: terminal(),
+    // or a fixed evaluationTime for tools without terminal() (opt-in there).
+    when (if printViolations.useEvaluationTime then time < printViolations.evaluationTime
+          else not terminal()) and change(localProperty) then
        if not pre(atLeastOneFailure) and localProperty==Property.Violated then
           atLeastOneFailure :=true;
           firstFailureTime :=time;
@@ -798,7 +801,8 @@ into the top level of your model.");
   equation
     connect(dummy.sortingPort, printViolations.sortingPort);
 
-    when terminal() then
+    when (if printViolations.useEvaluationTime then time >= printViolations.evaluationTime
+          else terminal()) then
       ok =Modelica_Requirements.Internal.printViolationsToLogFile(
           printViolations.logFile,
           observationID.name,
@@ -910,11 +914,18 @@ from this block.
       parameter Boolean printSatisfied = true
       "= true, if satisfied requirements shall be printed"
        annotation(choices(checkBox=true));
+      parameter Boolean useEvaluationTime = false
+      "= true: take the verdict at evaluationTime instead of at terminal() (tools without terminal())"
+       annotation(Dialog(tab="Advanced"));
+      parameter Modelica.Units.SI.Time evaluationTime = 1
+      "Instant the verdict is taken at when useEvaluationTime = true"
+       annotation(Dialog(tab="Advanced", enable=useEvaluationTime));
     final output Real satisfaction = printViolations.satisfaction
       "Satisfaction of all requirements in % (0% ... 100%)";
 
     inner Verify.PrintViolations printViolations(final printViolated=printViolated,
-       final printUntested=printUntested, final printSatisfied=printSatisfied)
+       final printUntested=printUntested, final printSatisfied=printSatisfied,
+       final useEvaluationTime=useEvaluationTime, final evaluationTime=evaluationTime)
       annotation (Placement(transformation(extent={{-100,80},{-80,100}})));
 
     annotation (

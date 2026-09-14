@@ -4,7 +4,7 @@ model LimitedCabinAltitudeRateOfChange
    extends Modelica.Icons.Example;
    import Modelica_Requirements.LogicalFunctions.*;
 
-  inner Modelica_Requirements.Verify.PrintViolations printViolations
+  inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=100)
     annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
   Modelica_Requirements.Verify.Requirement R_FreshECSFlow(text="The cabin altitude rate of change
 should not be out of the cabin

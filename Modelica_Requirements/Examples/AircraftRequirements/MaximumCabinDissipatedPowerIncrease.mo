@@ -6,7 +6,7 @@ model MaximumCabinDissipatedPowerIncrease
 
   parameter Real P_RoClim= 2/100;
 
-  inner Modelica_Requirements.Verify.PrintViolations printViolations
+  inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=14400)
     annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
   Verify.BooleanRequirement Requirement_CabinDissipatedPower(text="In the cabin area the dissipated
 power should not increase 

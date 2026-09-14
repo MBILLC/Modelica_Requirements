@@ -15,7 +15,7 @@ package Elementary
         annotation (Placement(transformation(extent={{-88,20},{-68,40}})));
       Modelica_Requirements.Sources.PropertyConstant propertyConstant(c=Modelica_Requirements.Types.Property.Undecided)
         annotation (Placement(transformation(extent={{-80,-40},{-60,-20}})));
-      inner Modelica_Requirements.Verify.PrintViolations printViolations
+      inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=5)
         annotation (Placement(transformation(extent={{40,62},{60,82}})));
       Modelica_Requirements.Verify.Requirement R_violated(text=
             "Input gives a violated requirement")

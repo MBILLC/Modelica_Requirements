@@ -6,7 +6,7 @@ model TriggerAPUStartSequence
 
   parameter Integer NbMin= 3;
 
-  inner Modelica_Requirements.Verify.PrintViolations printViolations
+  inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=8)
     annotation (Placement(transformation(extent={{-88,74},{-68,94}})));
   Modelica_Requirements.Verify.Requirement R_APUTriggering(text="APU (Auxiliar Power Unit) start 
 sequence shall start after three 

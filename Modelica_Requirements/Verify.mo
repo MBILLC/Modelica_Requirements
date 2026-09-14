@@ -10,6 +10,12 @@ package Verify "Library of components to verify requirements"
       "Name of log file (default = <root name>_log.txt)";
      parameter String htmlFile = Internal.getFirstName(getInstanceName()) + "_log.html"
       "Name of html log file (default = <root name>_log.html)";
+      parameter Boolean useEvaluationTime = false
+        "= true: take the verdict at evaluationTime instead of at terminal() (tools without terminal())"
+        annotation(Dialog(tab="Advanced"));
+      parameter Modelica.Units.SI.Time evaluationTime = 1
+        "Instant the verdict is taken at when useEvaluationTime = true"
+        annotation(Dialog(tab="Advanced", enable=useEvaluationTime));
       parameter Boolean printViolated = true
       "= true, if violated requirements shall be printed"
        annotation(choices(checkBox=true));
@@ -31,7 +37,8 @@ package Verify "Library of components to verify requirements"
        ok = Internal.initializeLogFile(logFile, time);
     end when;
 
-    when terminal() then
+    // Opt-in for tools without terminal(): evaluate at a fixed instant instead.
+    when (if useEvaluationTime then time >= evaluationTime else terminal()) then
        Internal.printViolationsToOutput(logFile, htmlFile, rootName, sortingPort.one,
                  satisfaction, time, printViolated, printUntested, printSatisfied);
     end when;
