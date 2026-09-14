@@ -235,18 +235,26 @@ As can be seen, the first FFT fulfills the check (scaledDistance = 0), whereas t
     A_base2       = 0;
     f_base2_line  = {{0,0},{0,0}};
     A_max_plot    = 0;
+    A_max_plot_perCent = 0;
     maxAmplitude2 = zeros(size(maxAmplitude,1),2);
     maxAmplitudePlot = zeros(size(maxAmplitude,1),2);
   equation
+    // ONE when-clause with ONE function call for the whole evaluation chain
+    // (base frequency -> scaled limit curve -> check -> icon curves). Written
+    // as several equations in one when-clause, a tool that evaluates a
+    // when-body with the pre-event values of the variables assigned in that
+    // same when (Modelon Impact, measured 2026-09-14 with an eleven-line
+    // model) checks the FFT against the limit curve scaled by the PREVIOUS
+    // base amplitude -- zero before the first FFT -- and reports Violated for
+    // a satisfied requirement; split over several when-clauses with the same
+    // condition, the same tool builds a nonlinear block around them and fails
+    // its initialization in a fraction of the runs. A single call has neither
+    // problem: its inputs come only from other when-clauses and parameters.
+    // Dymola and OpenModelica give identical results in every form.
     when {iTick == ns, terminal() and time < nextTime} then
-       (f_base2, A_base2)  = Internal.findBaseFrequency(f_resolution, f_base, searchInterval, A_buf);
-       maxAmplitude2       = [maxAmplitude[:,1],maxAmplitude[:,2]*(A_base2/100)];
-       A_max_plot          = max(maxAmplitude2[:,2]) + 0.1*A_base2;
-       A_max_plot_perCent  = A_max_plot*100/A_base2;
-       maxAmplitudePlot    = Internal.maxAmplitudeCurveForIcon(maxAmplitude2,A_max_plot,f_max_plot);
-       f_base2_line        = Internal.baseAmplitudeForIcon(f_base2, f_max_plot, A_base2, A_max_plot);
-       fA_plot             = Internal.amplitudeFrequencyCurveForIcon(A_buf, A_max_plot);
-       (y, scaledDistance) = Internal.checkDomain(A_buf, f_max_plot, maxAmplitude2, periods_ok);
+       (f_base2, A_base2, maxAmplitude2, A_max_plot, A_max_plot_perCent, maxAmplitudePlot,
+        f_base2_line, fA_plot, y, scaledDistance) = Internal.checkRelativeDomain(
+           A_buf, f_resolution, f_base, searchInterval, maxAmplitude, f_max_plot, periods_ok);
     end when;
 
     annotation (defaultComponentName="fft_relativeDomain1",Diagram(coordinateSystem(preserveAspectRatio=false,
@@ -501,15 +509,21 @@ As can be seen, the first FFT fulfills the check (scaledDistance = 0), whereas t
     THD = 0;
     f_base2_line = {{0,0},{0,0}};
   equation
+    // ONE when-clause with ONE function call for the whole evaluation chain
+    // (base frequency -> THD -> check -> icon curves). Written
+    // as several equations in one when-clause, a tool that evaluates a
+    // when-body with the pre-event values of the variables assigned in that
+    // same when (Modelon Impact, measured 2026-09-14 with an eleven-line
+    // model) checks the FFT against the limit curve scaled by the PREVIOUS
+    // base amplitude -- zero before the first FFT -- and reports Violated for
+    // a satisfied requirement; split over several when-clauses with the same
+    // condition, the same tool builds a nonlinear block around them and fails
+    // its initialization in a fraction of the runs. A single call has neither
+    // problem: its inputs come only from other when-clauses and parameters.
+    // Dymola and OpenModelica give identical results in every form.
     when {iTick == ns, terminal() and time < nextTime} then
-       (f_base2, A_base2, index_base2) = Internal.findBaseFrequency(f_resolution, f_base, searchInterval, A_buf);
-       A_max_plot     = max(A_buf);
-       f_base2_line   = Internal.baseAmplitudeForIcon(f_base2, f_max_plot, A_base2, A_max_plot);
-       fA_plot        = Internal.amplitudeFrequencyCurveForIcon(A_buf, A_max_plot);
-       THD            = Internal.calculateTHD(index_base2, n_harmonics, A_buf);
-       scaledDistance = THDmax-THD;
-       y              = if scaledDistance >= 0 then
-                            (if periods_ok then Property.Satisfied else Property.Undecided) else Property.Violated;
+       (f_base2, A_base2, index_base2, A_max_plot, f_base2_line, fA_plot, THD, scaledDistance, y) =
+          Internal.checkTHD(A_buf, f_resolution, f_base, searchInterval, n_harmonics, THDmax, f_max_plot, periods_ok);
     end when;
 
     annotation (defaultComponentName="maxTHD1",Diagram(coordinateSystem(preserveAspectRatio=false,
@@ -827,8 +841,15 @@ As can be seen, the first FFT fulfills the check (THD &lt; THDmax), whereas the 
            Internal.removeFFTresultFiles(resultDirectory);
         end when;
 
-        // Store u in internal buffer u_buf, if condition becomes true
-        startFFT = condition and not pre(condition);
+        // Store u in internal buffer u_buf, if condition becomes true.
+        // A condition that is already true at initialization starts the FFT
+        // too: the initial equation pre(condition) = false above is meant to
+        // make that happen through the edge, but a tool that initializes
+        // pre(condition) to condition's own value (Modelon Impact, measured
+        // 2026-09-14) never sees the edge, iTick then starts at 0 and the
+        // block is dead for the whole run. Saying it explicitly costs nothing
+        // where the edge works (Dymola, OpenModelica: identical results).
+        startFFT = (condition and not pre(condition)) or (initial() and condition);
         when {initial(), condition, time >= pre(nextTime)} then
            Tstart   = if startFFT then time else pre(Tstart);
            iTick    = if startFFT then 1 else pre(iTick) + 1;
@@ -937,6 +958,76 @@ As can be seen, the first FFT fulfills the check (THD &lt; THDmax), whereas the 
 </html>"));
     end amplitudeFrequencyCurveForIcon;
 
+    function checkRelativeDomain
+      "WithinRelativeDomain's whole evaluation in one call: base frequency, scaled limit curve, check, icon curves"
+      import Modelica_Requirements.Types.Property;
+      input Real A_buf[:] "Amplitudes";
+      input Modelica.Units.SI.Frequency f_resolution;
+      input Modelica.Units.SI.Frequency f_base;
+      input Real searchInterval "in [%] of f_base";
+      input Real maxAmplitude[:,2] "[frequency in Hz, amplitude in %]";
+      input Modelica.Units.SI.Frequency f_max_plot;
+      input Boolean periods_ok;
+      output Modelica.Units.SI.Frequency f_base2 "Real base frequency";
+      output Real A_base2 "Amplitude at the real base frequency";
+      output Real maxAmplitude2[size(maxAmplitude,1),2] "[frequency in Hz, amplitude]";
+      output Real A_max_plot;
+      output Real A_max_plot_perCent;
+      output Real maxAmplitudePlot[size(maxAmplitude,1),2];
+      output Real f_base2_line[2,2];
+      output Real fA_plot[3*size(A_buf,1),2];
+      output Property property;
+      output Real scaledDistance;
+    algorithm
+      (f_base2, A_base2)  := findBaseFrequency(f_resolution, f_base, searchInterval, A_buf);
+      maxAmplitude2       := [maxAmplitude[:,1], maxAmplitude[:,2]*(A_base2/100)];
+      A_max_plot          := max(maxAmplitude2[:,2]) + 0.1*A_base2;
+      A_max_plot_perCent  := if A_base2 > 0 then A_max_plot*100/A_base2 else 0;
+      maxAmplitudePlot    := maxAmplitudeCurveForIcon(maxAmplitude2, A_max_plot, f_max_plot);
+      f_base2_line        := baseAmplitudeForIcon(f_base2, f_max_plot, A_base2, A_max_plot);
+      fA_plot             := amplitudeFrequencyCurveForIcon(A_buf, A_max_plot);
+      (property, scaledDistance) := checkDomain(A_buf, f_max_plot, maxAmplitude2, periods_ok);
+      annotation (Documentation(info="<html>
+<p>See <a href=\"modelica://Modelica_Requirements.ChecksInFixedWindow_withFFT.WithinRelativeDomain\">WithinRelativeDomain</a>
+for why this is one function rather than several equations in a when-clause.</p>
+</html>"));
+    end checkRelativeDomain;
+
+    function checkTHD
+      "MaxTotalHarmonicDistortion's whole evaluation in one call: base frequency, THD, check, icon curves"
+      import Modelica_Requirements.Types.Property;
+      input Real A_buf[:] "Amplitudes";
+      input Modelica.Units.SI.Frequency f_resolution;
+      input Modelica.Units.SI.Frequency f_base;
+      input Real searchInterval "in [%] of f_base";
+      input Integer n_harmonics;
+      input Real THDmax;
+      input Modelica.Units.SI.Frequency f_max_plot;
+      input Boolean periods_ok;
+      output Modelica.Units.SI.Frequency f_base2 "Real base frequency";
+      output Real A_base2 "Amplitude at the real base frequency";
+      output Integer index_base2;
+      output Real A_max_plot;
+      output Real f_base2_line[2,2];
+      output Real fA_plot[3*size(A_buf,1),2];
+      output Real THD;
+      output Real scaledDistance;
+      output Property property;
+    algorithm
+      (f_base2, A_base2, index_base2) := findBaseFrequency(f_resolution, f_base, searchInterval, A_buf);
+      A_max_plot     := max(A_buf);
+      f_base2_line   := baseAmplitudeForIcon(f_base2, f_max_plot, A_base2, A_max_plot);
+      fA_plot        := amplitudeFrequencyCurveForIcon(A_buf, A_max_plot);
+      THD            := calculateTHD(index_base2, n_harmonics, A_buf);
+      scaledDistance := THDmax - THD;
+      property       := if scaledDistance >= 0 then
+                           (if periods_ok then Property.Satisfied else Property.Undecided) else Property.Violated;
+      annotation (Documentation(info="<html>
+<p>See <a href=\"modelica://Modelica_Requirements.ChecksInFixedWindow_withFFT.WithinRelativeDomain\">WithinRelativeDomain</a>
+for why this is one function rather than several equations in a when-clause.</p>
+</html>"));
+    end checkTHD;
+
     function checkDomain "Check whether FFT is in required domain"
       import Modelica_Requirements.Types.Property;
 
@@ -950,9 +1041,13 @@ As can be seen, the first FFT fulfills the check (THD &lt; THDmax), whereas the 
       Integer nA=size(A,1);
       Real    fMin, fMax;
       Real    df = f_max/(nA-1);
-      Real    diff[:];
-      Integer iMin, iMax;
-      Real f[:];
+      // Sized by the input A, not "[:]": a function's local arrays need a size
+      // that follows from its inputs (Modelon Impact refuses an undefined size
+      // outright, "Using variables with undefined size is not supported"). The
+      // checked band is the slice 1:n of each, with n = iMax - iMin + 1 <= nA.
+      Real    diff[size(A,1)];
+      Integer iMin, iMax, n;
+      Real f[size(A,1)];
     algorithm
       // Determine frequency domain that must be checked
       fMin :=max(0, maxAmplitude[1, 1]);
@@ -961,13 +1056,17 @@ As can be seen, the first FFT fulfills the check (THD &lt; THDmax), whereas the 
       // Find points of frequency axis
       iMin :=max(integer(ceil(fMin/df))+1, 1);
       iMax :=min(integer(floor(fMax/df))+1, nA);
+      n :=iMax - iMin + 1;
 
-      // Compute difference
-      f := linspace((iMin - 1)*df, (iMax - 1)*df, (iMax - iMin + 1));
-      diff := interpolate(maxAmplitude*1.001, f) - A[iMin:iMax];
+      // Compute difference over the checked band
+      f[1:n] := linspace((iMin - 1)*df, (iMax - 1)*df, n);
+      diff[1:n] := interpolate(maxAmplitude*1.001, f[1:n]) - A[iMin:iMax];
 
       // Compute scaled distance
-      scaledDistance :=min(diff)/max(maxAmplitude[:, 2]);
+      // guarded: a limit curve that is still all zeros (the relative domain
+      // before its first FFT) must not divide by zero if a tool evaluates
+      // this speculatively at initialization
+      scaledDistance :=min(diff[1:n])/max(max(maxAmplitude[:, 2]), Modelica.Constants.small);
       property :=if scaledDistance >= 0 then
                     (if periods_ok then Property.Satisfied else Property.Undecided) else Property.Violated;
       annotation (Documentation(revisions="<html>

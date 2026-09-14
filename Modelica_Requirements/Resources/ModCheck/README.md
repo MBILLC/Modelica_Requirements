@@ -25,8 +25,10 @@ run there with results matching the Dymola baseline — see
 `DEVMI_DIFFERENCES.md` §2 for the measurement. Impact evaluates `terminal()`
 to `false`, so a requirement model there needs
 `printViolations(useEvaluationTime=true)` to print its verdict; every example
-carries `evaluationTime = StopTime` for that purpose. The FFT checks do not
-compile in Impact (`checkDomain`, "variables with undefined size").
+carries `evaluationTime = StopTime` for that purpose. The FFT checks needed
+four separate fixes to run there (`DEVMI_DIFFERENCES.md` §3a) and now do; the
+examples that stop through `FallingEdgeTerminate` need `terminate1.delay > 0`
+for Impact to record their final verdict.
 
 ## OpenModelica vs Dymola
 

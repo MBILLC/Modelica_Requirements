@@ -101,9 +101,61 @@ keep `terminal()` and their ModCheck baselines still pass. Measured in Impact
 on `Verify.Requirement`: with the default the run succeeds and prints **no
 verdict** — Impact reports *"The terminal() operator is not supported, and is
 currently evaluated to false"*; with `printViolations.useEvaluationTime=true`
-the full report appears at 5 s (50 % satisfied, 1 violated, 1 untested). The
-FFT checks additionally fail to compile in Impact (`checkDomain`: "Using
-variables with undefined size is not supported"), independent of `terminal()`.
+the full report appears at 5 s (50 % satisfied, 1 violated, 1 untested).
+
+### 3a. The FFT checks in Impact — four separate problems, all fixed on this fork
+
+DevMI's README says the FFT-based requirements never worked in Impact. Taking
+them apart (2026-09-14) found four independent causes, three of them in
+Impact and one in the library:
+
+1. **`checkDomain`'s local arrays `diff[:]`, `f[:]`** — Impact refuses an
+   undefined size ("Using variables with undefined size is not supported").
+   DevMI's `2436e15` had the right idea but not a valid fix (`diff[size(A,1)]`
+   then assigned a shorter vector; `f[iMax - iMin + 1]` sized by variables
+   assigned later in the algorithm). Here: both sized `size(A,1)` from the
+   input, the checked band is the slice `1:n`, and the division is guarded
+   against an all-zero limit curve. Bit-identical in Dymola.
+2. **The sampling chain never started.** `PartialFFT` seeds `iTick = 1` through
+   `startFFT = condition and not pre(condition)` with `pre(condition) = false`
+   in an initial equation; Impact initialises `pre(condition)` to `condition`
+   instead, so the edge never happens, `iTick` starts at 0 and the block is dead
+   for the whole run (`FFT_computation` false from t = 0, measured). Fix:
+   `startFFT = (condition and not pre(condition)) or (initial() and condition)`
+   — identical results in Dymola and OpenModelica.
+3. **`terminate()` drops the edge's own values.** The examples end with
+   `FallingEdgeTerminate` once the FFT is done; Impact's result then holds the
+   pre-event state of that instant (verdict still Undecided), Dymola the post-
+   event one. Deferring `terminate()` to the next event iteration does not help;
+   a finite delay does. `FallingEdgeTerminate` gained `delay = 0` (upstream
+   behaviour); with `terminate1.delay = 0.01` Impact records the verdict and
+   ends 10 ms later. Dymola treats that parameter as evaluated and refuses to
+   set it at run time ("Setting terminate1.delay has no effect") — ModCheck's
+   Dymola source now re-translates on that message.
+4. **Stale values inside a `when`.** `WithinRelativeDomain` scaled its limit
+   curve by the base amplitude and checked against it in one `when`; Impact
+   evaluated the check with the *pre-event* curve (zero before the first FFT)
+   and reported Violated while `scaledDistance` from the very same call was
+   positive. An eleven-line model reproduces it: of a two-output function
+   called in a `when` whose matrix input is assigned in that `when`, the Real
+   output comes back right and the Integer output wrong; OpenModelica gets
+   both right. Splitting into several `when`-clauses fixes the value but makes
+   Impact build a nonlinear block around them that fails initialisation in a
+   fraction of the runs. What works everywhere: **one `when`, one function
+   call for the whole chain** — `Internal.checkRelativeDomain` and
+   `Internal.checkTHD`, inputs only from other `when`-clauses and parameters.
+   Bit-identical in Dymola; the THD verdicts in Impact now follow the THD
+   values they are computed from.
+
+With all four, every FFT example runs in Impact; the two with a Dymola
+baseline (`WithinAbsoluteDomain1`, `WithinRelativeDomain1`) switch to
+Satisfied at exactly Dymola's instant, 4.975 s, given `terminate1.delay`.
+Also observed: bursts of non-deterministic initialisation failures in Impact
+("Failed to update the events at time 0", `IllegalResidualOutput` in block
+1.1) hitting 0 to 9 of 16 identical runs, across every model form and even
+the examples that had never failed, then gone — server-side, not the
+library's, and worth a report to Modelon if it recurs. OpenModelica still
+cannot build any FFT check (`lowerWhenEqn: equation not handled`).
 
 ## 4. Impact-specific workarounds that should not survive a merge
 
