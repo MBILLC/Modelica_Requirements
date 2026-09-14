@@ -206,10 +206,50 @@ cannot build any FFT check (`lowerWhenEqn: equation not handled`).
   3.7/3.8 drafts -- allows a model instance as a record argument only through
   an **explicit** record constructor call, `R(m)`, which copies the public
   components whose names match; the implicit form the library uses is a
-  Dymola extension. Making the two examples legal means wrapping the
-  arguments (`watchDCMotor(obj=MotorData(dcpm1))` and the like) and moving
-  the record types (`MotorData`, `InertiaData`) out of the functions'
-  protected sections so the models can name them. Left as is on this branch.
+  Dymola extension. **Fixed on 2026-09-14**, after measuring the candidate
+  forms on all three tools with a probe library (the shape of the failing calls in
+  twenty lines each, kept with the engine scratch scripts outside git):
+
+  | form | Dymola 2026x | OpenModelica 1.27.1 | Modelon Impact (OCT) |
+  |---|---|---|---|
+  | `f(m)` — instance where a record is expected | runs | "Type mismatch for positional argument" | "Accesses to composite components other than records are not allowed" |
+  | `f(R(m))` — the MLS §12.6.1 record cast | runs, nested and vectorized | reads it as a positional constructor call: "Function parameter p was not given" | as above |
+  | `f(R(a=m.a, sub=S(w=m.sub.w)))`, `R(subs={S(w=m.subs[i].w) for i in 1:n})` — explicit constructors | runs | runs | runs |
+  | a record with `parameter` components **returned by** an `Inline=true` function, bound to a parameter | runs | "Too many equations, over-determined system" | "variability of the component 'r.p' (parameter) must be higher than or equal to the variability of the binding equation (continuous-time)" |
+  | the same record built by its constructor, no function | runs | runs | runs |
+  | a function returning a record with an **array** component, called with parameter-variability arguments | runs | builds, **returns zeros** — silently, whether the output is bound on its declaration, sized and assigned in the algorithm, or `LateInline`; the C code assigns the record to a scalar when the output has a binding, and computes 0 otherwise | runs |
+  | the same with continuous-time arguments | runs | runs | runs |
+
+  So the record cast is legal Modelica that only Dymola implements, and the
+  library now uses what all three run: explicit record constructors at the
+  call sites (`MotorData(VaNominal=dcpm1.VaNominal, ..., inertiaRotor=InertiaData(w=dcpm1.inertiaRotor.w))`,
+  `PrescribedPump(N_in=pumps.N_in, port_a=FluidPort_p(p=pumps.port_a.p), ...)`),
+  `MotorData`/`InertiaData` moved out of `watchDCMotor`'s protected section so
+  the call site can name them, `DCMotorWatching`'s nominal values without the
+  `parameter` prefix (the record comes out of a function) and the current
+  limit in `DCMotorRequirements` as a `BooleanExpression` like the speed limit,
+  and the source/sink observations built with the `Source` constructor
+  directly — `SourceObservation_from_PartialSource` and `Records.PartialSource`
+  are gone, because a fixed boundary's pressures are parameters and that is
+  the omc case that returns zeros. Both examples now build and run in omc and
+  Impact with agreeing results (`R_InBand`, `R_speedMax` end in the same
+  state; the reservoir level to 1e-4); Dymola's license still refuses both,
+  but every construct passes Dymola in the probe. The omc reproducer for the
+  zeros, worth an issue upstream:
+
+  ```modelica
+  package Bug
+    record Port Real p; end Port;
+    record Src Port ports[:]; end Src;
+    record Obs Real p[:]; end Obs;
+    model Boundary parameter Real p0 = 1e5; parameter Integer n = 1; Port ports[n](each p = p0); end Boundary;
+    function obs input Src s; output Obs o = Obs(p=s.ports.p); algorithm annotation(Inline=true); end obs;
+    block Req input Obs observation; Boolean ok[size(observation.p,1)] = {observation.p[i] > 0 for i in 1:size(observation.p,1)}; end Req;
+    model B  // r.observation.p[1] is 0 in omc 1.27.1 (1e5 in Dymola and Impact); with `p = 1e5 + time` it is right
+      Boundary src; Req r(observation=obs(Src(ports={Port(p=src.ports[i].p) for i in 1:src.n})));
+    end B;
+  end Bug;
+  ```
 * **The FFT checks** are the hardest corner for every tool: Impact (per
   DevMI's README), OpenModelica (*"lowerWhenEqn: equation not handled"*), and
   Dymola's license for four of the six examples.

@@ -1,0 +1,85 @@
+# Modelon Impact as its own baseline for the five Modelica_Requirements
+# examples no other tool here produces a reference for: Dymola's license
+# refuses them ("too complex for the current license") and OpenModelica 1.27.1
+# does not build them (the SlidingWindow buffer record, the FFT checks). In
+# the composite list beside this folder they are SKIPPED -- run, but checked
+# against nothing. Here they are checked against Impact's own stored result,
+# so a change in the library or in Impact that moves them is caught, at
+# ModCheck's usual 100x rtol spread. Same case definitions as the composite
+# list (the library's experiment() annotations); references in this folder's
+# ReferenceResults/, stored 2026-09-14 from Modelon Impact (Sept. 2026), cvode.
+library: Modelica_Requirements
+workspace: modelica-requirements-fork
+custom_function: dynamic
+tolerance: 0.001
+
+sources:
+  default:
+    backend: impact
+    workspace: modelica-requirements-fork
+
+cases:
+  - name: MR_Examples_BackupPowerSupply_MainPowerSupplyRequirements
+    # Generated 2026-09-14 from Modelica_Requirements.Examples.BackupPowerSupply.MainPowerSupplyRequirements's experiment annotation.
+    # No Tolerance in the annotation: rtol defaults to 1e-6 here, not Dymola's 1e-4.
+    # No top-level outputs: `variables:` is the --variables glob given to the generator.
+    enabled: true
+    model: Modelica_Requirements.Examples.BackupPowerSupply.MainPowerSupplyRequirements
+    start_time: 0.0
+    final_time: 70.0
+    ncp: 500
+    rtol: 1.0e-06
+    modifiers: {}
+    variables: [time, "*.y"]
+
+  - name: MR_Examples_Elementary_ChecksInFixedWindow_withFFT_WithinAbsoluteDomain2
+    # Generated 2026-09-14 from Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.WithinAbsoluteDomain2's experiment annotation.
+    # No Tolerance in the annotation: rtol defaults to 1e-6 here, not Dymola's 1e-4.
+    # No top-level outputs: `variables:` is the --variables glob given to the generator.
+    enabled: true
+    model: Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.WithinAbsoluteDomain2
+    start_time: 0.0
+    final_time: 16.0
+    ncp: 500
+    rtol: 1.0e-06
+    modifiers: {}
+    variables: [time, "*.y"]
+
+  - name: MR_Examples_Elementary_ChecksInFixedWindow_withFFT_WithinRelativeDomain2
+    # Generated 2026-09-14 from Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.WithinRelativeDomain2's experiment annotation.
+    # No Tolerance in the annotation: rtol defaults to 1e-6 here, not Dymola's 1e-4.
+    # No top-level outputs: `variables:` is the --variables glob given to the generator.
+    enabled: true
+    model: Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.WithinRelativeDomain2
+    start_time: 0.0
+    final_time: 16.0
+    ncp: 500
+    rtol: 1.0e-06
+    modifiers: {}
+    variables: [time, "*.y"]
+
+  - name: MR_Examples_Elementary_ChecksInFixedWindow_withFFT_MaxTotalHamonicDistortion1
+    # Generated 2026-09-14 from Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.MaxTotalHamonicDistortion1's experiment annotation.
+    # No Tolerance in the annotation: rtol defaults to 1e-6 here, not Dymola's 1e-4.
+    # No top-level outputs: `variables:` is the --variables glob given to the generator.
+    enabled: true
+    model: Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.MaxTotalHamonicDistortion1
+    start_time: 0.0
+    final_time: 6.0
+    ncp: 500
+    rtol: 1.0e-06
+    modifiers: {}
+    variables: [time, "*.y"]
+
+  - name: MR_Examples_Elementary_ChecksInFixedWindow_withFFT_MaxTotalHamonicDistortion2
+    # Generated 2026-09-14 from Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.MaxTotalHamonicDistortion2's experiment annotation.
+    # No Tolerance in the annotation: rtol defaults to 1e-6 here, not Dymola's 1e-4.
+    # No top-level outputs: `variables:` is the --variables glob given to the generator.
+    enabled: true
+    model: Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.MaxTotalHamonicDistortion2
+    start_time: 0.0
+    final_time: 16.0
+    ncp: 500
+    rtol: 1.0e-06
+    modifiers: {}
+    variables: [time, "*.y"]

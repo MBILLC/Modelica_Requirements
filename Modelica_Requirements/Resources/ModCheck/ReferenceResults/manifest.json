@@ -3378,6 +3378,83 @@
     "descriptor": "openmodelica v1.27.1 (64-bit), MSL 4.1.0, cvode"
   },
   {
+    "name": "MR_OM_Examples_MotorsWithLosses_CheckMotorWithLosses",
+    "model": "Modelica_Requirements.Examples.MotorsWithLosses.CheckMotorWithLosses",
+    "variables": [
+      "DCPM_withLosses.dcpm1.thermalAmbient.constTa.y",
+      "DCPM_withLosses.dcpm1.thermalAmbient.constTpm.y",
+      "DCPM_withLosses.dcpm2.thermalAmbient.constTa.y",
+      "DCPM_withLosses.dcpm2.thermalAmbient.constTpm.y",
+      "DCPM_withLosses.ramp.y",
+      "checkRequirements.dcmotorRequirements[1].current.y",
+      "checkRequirements.dcmotorRequirements[1].speed.y",
+      "checkRequirements.dcmotorRequirements[2].current.y",
+      "checkRequirements.dcmotorRequirements[2].speed.y",
+      "time"
+    ],
+    "bytes": 5223,
+    "metrics": {
+      "state_events": 7,
+      "time_events": 0,
+      "steps": 734,
+      "function_evaluations": 833,
+      "jacobian_evaluations": 16,
+      "error_test_failures": 8,
+      "convergence_failures": 0,
+      "cpu_time": 0.0268484,
+      "simulation_time": 0.0194433,
+      "kind": "dynamic",
+      "solver": "cvode",
+      "wall_time": 0.11956439999630675,
+      "samples": 516,
+      "omc_version": "OpenModelica v1.27.1 (64-bit)",
+      "msl_version": "4.1.0",
+      "spread_applied": true,
+      "rtol": 1e-06
+    },
+    "descriptor": "openmodelica v1.27.1 (64-bit), MSL 4.1.0, cvode"
+  },
+  {
+    "name": "MR_OM_Examples_SimplePumpingSystem_CheckPumpingSystem",
+    "model": "Modelica_Requirements.Examples.SimplePumpingSystem.CheckPumpingSystem",
+    "variables": [
+      "PT1.y",
+      "PumpRPMGenerator.y",
+      "RelativePressureSetPoint.y",
+      "controller.y",
+      "pumpRequirements.p_pa.y",
+      "pumpRequirements.p_pb.y",
+      "pumpRequirements.p_speed.y",
+      "tankRequirements.band1.y",
+      "tankRequirements.delayedRising1.y",
+      "tankRequirements.not1.y",
+      "tankRequirements.o_level.y",
+      "time",
+      "valveOpening.y"
+    ],
+    "bytes": 9705,
+    "metrics": {
+      "state_events": 33,
+      "time_events": 0,
+      "steps": 1977,
+      "function_evaluations": 2947,
+      "jacobian_evaluations": 91,
+      "error_test_failures": 103,
+      "convergence_failures": 10,
+      "cpu_time": 1.11206,
+      "simulation_time": 1.06632,
+      "kind": "dynamic",
+      "solver": "cvode",
+      "wall_time": 1.2245783999678679,
+      "samples": 568,
+      "omc_version": "OpenModelica v1.27.1 (64-bit)",
+      "msl_version": "4.1.0",
+      "spread_applied": true,
+      "rtol": 1e-06
+    },
+    "descriptor": "openmodelica v1.27.1 (64-bit), MSL 4.1.0, cvode"
+  },
+  {
     "name": "MR_OM_Examples_SimplePumpingSystem_Components_PumpingSystem",
     "model": "Modelica_Requirements.Examples.SimplePumpingSystem.Components.PumpingSystem",
     "variables": [
