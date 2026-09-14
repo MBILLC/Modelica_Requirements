@@ -1005,11 +1005,22 @@ results in
     "Terminate simulation when a falling edge of the input u occurs"
     parameter String text = "Simulation terminated explicitely"
       "Shown when simulation is terminated";
+    parameter Modelica.Units.SI.Time delay = 0
+      "> 0: terminate this long after the edge instead of at it (a tool that does not store the edge's own event values at termination, e.g. Modelon Impact, then still records them)"
+      annotation(Dialog(tab="Advanced"));
     Modelica.Blocks.Interfaces.BooleanInput u
       "Falling edge of this input terminates the simulation"
       annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
+  protected
+    discrete Modelica.Units.SI.Time t_stop(start=-1, fixed=true) "Termination instant when delay > 0";
   equation
     when not u then
+      t_stop = time + delay;
+      if delay <= 0 then
+        terminate(text);
+      end if;
+    end when;
+    when delay > 0 and pre(t_stop) >= 0 and time >= pre(t_stop) then
       terminate(text);
     end when;
     annotation (defaultComponentName = "terminate1", Icon(coordinateSystem(preserveAspectRatio=false), graphics={
