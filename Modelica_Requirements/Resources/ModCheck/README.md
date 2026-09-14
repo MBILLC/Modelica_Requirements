@@ -48,5 +48,5 @@ by each case's slot in the list, so the same model sits on the same page at
 the same position in both, with a DISABLED or SKIPPED card where one tool
 could not run it:
 
-    python3 regression_testing.py --config regression_cases_modelica_requirements.yaml         --aligned-batches --html-report-dir HtmlReports
-    python3 regression_testing.py --config regression_cases_modelica_requirements_openmodelica.yaml         --aligned-batches --html-report-dir HtmlReports_OpenModelica
+    python3 regression_testing.py --config regression_cases_modelica_requirements.yaml \n        --aligned-batches --html-report-dir HtmlReports
+    python3 regression_testing.py --config regression_cases_modelica_requirements_openmodelica.yaml \n        --aligned-batches --html-report-dir HtmlReports_OpenModelica
