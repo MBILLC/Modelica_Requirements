@@ -37,7 +37,15 @@ package SimplePumpingSystem
     annotation(experiment(StopTime=2000, Tolerance=1e-006),
       Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{160,
               100}})),
-      Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})));
+      Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}})),
+      Documentation(revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> The observation records are built with explicit record constructors from <code>reservoir</code>, <code>pumps</code>, <code>source</code> and <code>sink</code>, which are no longer passed to the binding functions themselves (a Dymola extension; the record cast of the Modelica Language Specification, section 12.6.1, is implemented by Dymola alone). The source and sink observations use the <code>Source</code> record constructor directly: OpenModelica 1.27 returns zeros from a function whose result is a record with an array component when the call has parameter variability, as a fixed boundary's pressures have (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
+</html>"));
   end CheckPumpingSystem;
   extends Modelica.Icons.ExamplesPackage;
 
@@ -304,6 +312,14 @@ parameter variability, which a fixed boundary's pressures have.</p>
 
          annotation(Inline=true);
       end PumpObservation_from_PrescribedPump;
+      annotation (Documentation(revisions="<html>
+<table border=1 cellspacing=0 cellpadding=2>
+<tr><th>Date</th> <th align=\"left\">Description</th></tr>
+
+<tr><td valign=\"top\"> Sept. 14, 2026 </td>
+    <td valign=\"top\"> <code>SourceObservation_from_PartialSource</code> and <code>Records.PartialSource</code> removed; <code>CheckPumpingSystem</code> builds the source observations with the <code>Requirements.Records.Source</code> constructor (see there) (H. Tummescheit, Model Based Innovation LLC)</td></tr>
+</table>
+</html>"));
     end Bindings;
   end Components;
 end SimplePumpingSystem;

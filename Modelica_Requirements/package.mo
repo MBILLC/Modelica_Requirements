@@ -77,6 +77,28 @@ leave the Dymola and OpenModelica results of every example unchanged.
      The same count; Modelon Impact fails to scalarize the element form (\"Exception caught while
      scalarizing function cardSatisfied\"), which took
      <code>Examples.AircraftRequirements.MinimumOperationalServiceLife</code> down with it.</li>
+
+<li> <a href=\"modelica://Modelica_Requirements.Examples.MotorsWithLosses\">Examples.MotorsWithLosses</a> and
+     <a href=\"modelica://Modelica_Requirements.Examples.SimplePumpingSystem.CheckPumpingSystem\">Examples.SimplePumpingSystem.CheckPumpingSystem</a>
+     passed model instances to their binding functions (<code>watchDCMotor(obj=dcpm1)</code>,
+     <code>TankObservation_from_OpenTank(reservoir)</code> and the like) where the function input is a record.
+     That is a Dymola extension; the form the Modelica Language Specification allows (3.6, section 12.6.1,
+     the record cast <code>R(m)</code>) turned out to be implemented by Dymola alone: OpenModelica 1.27.1 reads
+     it as a positional constructor call and Modelon Impact refuses any access to a model instance in an
+     expression, in the implicit and the explicit form alike. The call sites now build the observation
+     records with explicit record constructors, nested and vectorized where the instance was
+     (<code>MotorData(VaNominal=dcpm1.VaNominal, ..., inertiaRotor=InertiaData(w=dcpm1.inertiaRotor.w))</code>),
+     which all three tools run; <code>MotorData</code> and <code>InertiaData</code> moved out of the
+     function's protected section so the call site can name them. Two consequences of the same measurement:
+     <code>DCMotorWatching</code>'s nominal values lost their <code>parameter</code> prefix and the current
+     limit in <code>DCMotorRequirements</code> became a <code>BooleanExpression</code> like the speed limit
+     (a record with parameter components returned by a function is continuous-time to Impact and
+     over-determined to OpenModelica); and the source and sink observations are built with the
+     <code>Source</code> record constructor directly, <code>SourceObservation_from_PartialSource</code> and
+     <code>Records.PartialSource</code> being removed, because OpenModelica 1.27.1 silently returns zeros
+     from a function whose result is a record with an array component when the call has parameter
+     variability, as a fixed boundary's pressures have. Both examples now simulate in OpenModelica and
+     Modelon Impact with agreeing results.</li>
 </ul>
 
 <h4>Three tools compared</h4>
@@ -100,15 +122,14 @@ the three tools and the reports are kept beside it, not in this library.
         <code>LimitedCabinAltitudeRateOfChange</code>, four of the six FFT examples,
         <code>CheckMotorWithLosses</code>, <code>CheckPumpingSystem</code>. Not a library problem.</td></tr>
 <tr><td valign=\"top\">OpenModelica 1.27.1</td>
-    <td valign=\"top\">46</td>
-    <td valign=\"top\">22 do not build: the 14 examples using a sliding-window block
+    <td valign=\"top\">48</td>
+    <td valign=\"top\">20 do not build: the 14 examples using a sliding-window block
         (\"No runtime support for this record assignment\" for the buffer record returned by
-        <code>Internal.SlidingWindow.push</code>), the 6 FFT examples
-        (\"Internal error BackendDAECreate.lowerWhenEqn: equation not handled\"), and the 2 examples
-        that pass a model instance to a function (see below).</td></tr>
+        <code>Internal.SlidingWindow.push</code>) and the 6 FFT examples
+        (\"Internal error BackendDAECreate.lowerWhenEqn: equation not handled\").</td></tr>
 <tr><td valign=\"top\">Modelon Impact (Sept. 2026)</td>
-    <td valign=\"top\">66 (61 of them with a reference to compare against)</td>
-    <td valign=\"top\">2 do not compile, the two examples that pass a model instance to a function (see below).</td></tr>
+    <td valign=\"top\">68 (63 of them with a reference to compare against)</td>
+    <td valign=\"top\">&mdash;</td></tr>
 </table>
 
 <p>
@@ -121,18 +142,18 @@ instants themselves, sampled on opposite sides of the event. One example,
 </p>
 
 <p>
-<b>Modelon Impact against Dymola</b> (and against OpenModelica for the one example Dymola's license
-refused and OpenModelica builds): on the 61 examples with a reference, all 275 signal checks pass. The 79 continuous signals lie inside their tolerance tube everywhere (a funnel error of exactly 0); of the 193 signals compared at their final value, 190 are identical and the other three agree to 5e-9; the relay signals of <code>PumpingSystem</code> agree by accumulated difference within the tolerance measured for Dymola against itself. The other 5 examples Impact simulates (<code>MainPowerSupplyRequirements</code> and four FFT examples) have no reference from either other tool.
+<b>Modelon Impact against Dymola</b> (and against OpenModelica for the three examples Dymola's license
+refuses and OpenModelica builds): on the 63 examples with a reference, all 296 signal checks pass. The 85 continuous signals lie inside their tolerance tube everywhere (a funnel error of exactly 0); of the 208 signals compared at their final value, 205 are identical and the other three agree to 5e-9; the relay signals of <code>PumpingSystem</code> agree by accumulated difference within the tolerance measured for Dymola against itself. The other 5 examples Impact simulates (<code>MainPowerSupplyRequirements</code> and four FFT examples) have no reference from either other tool.
 </p>
 
-<h4>Known limitation</h4>
+<h4>Tool support for the record cast</h4>
 <p>
-<code>Examples.MotorsWithLosses</code> (<code>watchDCMotor(obj=dcpm1)</code>) and
-<code>Examples.SimplePumpingSystem.CheckPumpingSystem</code>
-(<code>SourceObservation_from_PartialSource(partialSource=source)</code>) pass a model instance to a
-function whose input is a record. The Modelica Language Specification (3.6, section 12.6.1) allows this
-only as an explicit record constructor call, <code>R(m)</code>; the implicit form is a Dymola extension.
-OpenModelica and Modelon Impact reject both examples, and they are left as they are in this release.
+The Modelica Language Specification (3.6, section 12.6.1) lets a record constructor take a model, block or
+connector instance as its single argument, <code>R(m)</code>, copying the public components whose names
+match, recursively and vectorized. Of the three tools compared here, only Dymola implements it (measured
+2026-09-14 on a probe library); Dymola also accepts the instance itself where a record is expected, which
+this library relied on until this release. The explicit record constructor,
+<code>R(a=m.a, sub=S(w=m.sub.w))</code>, is what all three run, and it is what the examples now use.
 </p>
 </html>"));
   end Version_0_7_1;
