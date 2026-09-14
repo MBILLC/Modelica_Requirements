@@ -1,0 +1,1594 @@
+{
+ "run": {
+  "utc": "2026-09-14T16:10:29+00:00",
+  "rtol_factor": 100.0,
+  "descriptor": "impact workspace 'modelica-requirements-fork'",
+  "reference_descriptor": "dymola 2026x, 2025-10-10, MSL 4.0.0, Cvode / openmodelica v1.27.1 (64-bit), MSL 4.1.0, cvode",
+  "cases": 61,
+  "failed_cases": 0,
+  "bytes": 426559
+ },
+ "cases": [
+  {
+   "name": "MR_Examples_AircraftRequirements_LimitedCabinAltitudeRateOfChange",
+   "model": "Modelica_Requirements.Examples.AircraftRequirements.LimitedCabinAltitudeRateOfChange",
+   "variables": [
+    "PressureAltitude.y",
+    "clock.y",
+    "const1.y",
+    "derP.y",
+    "maxDuration1.y",
+    "not1.y",
+    "time",
+    "toBoolean.y",
+    "withinDomain1.y"
+   ],
+   "bytes": 11207,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04389821400400251,
+    "steps": 505,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 3,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_AircraftRequirements_LimitedControlFrequency",
+   "model": "Modelica_Requirements.Examples.AircraftRequirements.LimitedControlFrequency",
+   "variables": [
+    "crossing.y",
+    "expr1.y",
+    "meanFreq.y",
+    "time"
+   ],
+   "bytes": 7250,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.0689142610062845,
+    "steps": 549,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 20,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_AircraftRequirements_LimitedFreshECSFlow",
+   "model": "Modelica_Requirements.Examples.AircraftRequirements.LimitedFreshECSFlow",
+   "variables": [
+    "const1.y",
+    "time",
+    "withinDomain1.y"
+   ],
+   "bytes": 2056,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04157847899477929,
+    "steps": 513,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 2,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_AircraftRequirements_MaximumCabinDissipatedPowerIncrease",
+   "model": "Modelica_Requirements.Examples.AircraftRequirements.MaximumCabinDissipatedPowerIncrease",
+   "variables": [
+    "maxIncrease1.y",
+    "time"
+   ],
+   "bytes": 1873,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.038869335025083274,
+    "steps": 509,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 2,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_AircraftRequirements_MaximumCabinTemperatureIncrease",
+   "model": "Modelica_Requirements.Examples.AircraftRequirements.MaximumCabinTemperatureIncrease",
+   "variables": [
+    "maxIncrease.y",
+    "time"
+   ],
+   "bytes": 1937,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03640300303231925,
+    "steps": 509,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 2,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_AircraftRequirements_MinimumAirDistributionPerformance",
+   "model": "Modelica_Requirements.Examples.AircraftRequirements.MinimumAirDistributionPerformance",
+   "variables": [
+    "EngineOff.y",
+    "InFlight.y",
+    "NominalPerformance.y",
+    "allTrue1.y",
+    "during1.y",
+    "time"
+   ],
+   "bytes": 3337,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03575984196504578,
+    "steps": 506,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_AircraftRequirements_MinimumOperationalServiceLife",
+   "model": "Modelica_Requirements.Examples.AircraftRequirements.MinimumOperationalServiceLife",
+   "variables": [
+    "InFlight.y",
+    "InOperation.y",
+    "and1.y",
+    "minDuration1.y",
+    "minRising1.y",
+    "time"
+   ],
+   "bytes": 20878,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 1.2358091530040838,
+    "steps": 11189,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 1,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_AircraftRequirements_PreventHeatExchangerClogging",
+   "model": "Modelica_Requirements.Examples.AircraftRequirements.PreventHeatExchangerClogging",
+   "variables": [
+    "airHumidity.y",
+    "const1.y",
+    "integrator1.y",
+    "less.y",
+    "massAirFlow.y",
+    "product.y",
+    "time"
+   ],
+   "bytes": 6602,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03363945096498355,
+    "steps": 502,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 1,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_AircraftRequirements_TriggerAPUStartSequence",
+   "model": "Modelica_Requirements.Examples.AircraftRequirements.TriggerAPUStartSequence",
+   "variables": [
+    "APUSeqStarted.y",
+    "EngineStart.y",
+    "maxRising1.y",
+    "time"
+   ],
+   "bytes": 2865,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03714671899797395,
+    "steps": 515,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_BandDuration",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.BandDuration",
+   "variables": [
+    "bandDuration1.y",
+    "check.realToBoolean.y",
+    "check.y",
+    "condition.realToBoolean.y",
+    "condition.y",
+    "time"
+   ],
+   "bytes": 3610,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.045271324983332306,
+    "steps": 537,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 4,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_BandRising",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.BandRising",
+   "variables": [
+    "bandRising.y",
+    "check.realToBoolean.y",
+    "check.y",
+    "condition.realToBoolean.y",
+    "condition.y",
+    "time"
+   ],
+   "bytes": 3066,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04160508996574208,
+    "steps": 523,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_During",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.During",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "condition.realToBoolean.y",
+    "condition.y",
+    "during.y",
+    "time"
+   ],
+   "bytes": 3520,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04235855001024902,
+    "steps": 522,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_FixedRising",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.FixedRising",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "condition.realToBoolean.y",
+    "condition.y",
+    "fixedRising1.y",
+    "fixedRising2.y",
+    "time"
+   ],
+   "bytes": 3432,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04532019200269133,
+    "steps": 533,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_MaxDuration",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.MaxDuration",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "condition.realToBoolean.y",
+    "condition.y",
+    "maxDuration.y",
+    "time"
+   ],
+   "bytes": 3561,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.044806549965869635,
+    "steps": 533,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 2,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_MaxRising",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.MaxRising",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "condition.realToBoolean.y",
+    "condition.y",
+    "maxRising.y",
+    "time"
+   ],
+   "bytes": 3077,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04322488501202315,
+    "steps": 523,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_MaxRisingFrequency",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.MaxRisingFrequency",
+   "variables": [
+    "condition.realToBoolean.y",
+    "condition.y",
+    "crossing.y",
+    "expr1.y",
+    "maxFrequency1.y",
+    "time"
+   ],
+   "bytes": 48099,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.3990192509954795,
+    "steps": 5124,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 79,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_MinDuration",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.MinDuration",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "condition.realToBoolean.y",
+    "condition.y",
+    "minDuration.y",
+    "time"
+   ],
+   "bytes": 3571,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04807320598047227,
+    "steps": 533,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 2,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_MinRising",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.MinRising",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "condition.realToBoolean.y",
+    "condition.y",
+    "minRising1.y",
+    "time"
+   ],
+   "bytes": 3055,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04266262805322185,
+    "steps": 523,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_NoRising",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.NoRising",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "condition.realToBoolean.y",
+    "condition.y",
+    "noRising1.y",
+    "time"
+   ],
+   "bytes": 3040,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04938873101491481,
+    "steps": 519,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_WhenChanging",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.WhenChanging",
+   "variables": [
+    "check1.realToBoolean.y",
+    "check1.y",
+    "check2.y",
+    "condition1.realToBoolean.y",
+    "condition1.y",
+    "condition2.y",
+    "time",
+    "whenChanging1.y",
+    "whenChanging2.y",
+    "whenChanging3.y"
+   ],
+   "bytes": 3917,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03983646398410201,
+    "steps": 509,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_WhenFalling",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.WhenFalling",
+   "variables": [
+    "check1.realToBoolean.y",
+    "check1.y",
+    "check2.y",
+    "condition1.realToBoolean.y",
+    "condition1.y",
+    "condition2.y",
+    "time",
+    "whenFalling1.y",
+    "whenFalling2.y",
+    "whenFalling3.y"
+   ],
+   "bytes": 3884,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.0391356679610908,
+    "steps": 509,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_WhenRising",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.WhenRising",
+   "variables": [
+    "check1.realToBoolean.y",
+    "check1.y",
+    "check2.y",
+    "condition1.realToBoolean.y",
+    "condition1.y",
+    "condition2.y",
+    "time",
+    "whenRising1.y",
+    "whenRising2.y",
+    "whenRising3.y"
+   ],
+   "bytes": 3897,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03970439999829978,
+    "steps": 509,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_WithinDomain",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow.WithinDomain",
+   "variables": [
+    "const1.y",
+    "time",
+    "withinDomain.y"
+   ],
+   "bytes": 3443,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04989954305347055,
+    "steps": 569,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 1,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_withFFT_WithinAbsoluteDomain1",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.WithinAbsoluteDomain1",
+   "variables": [
+    "const.y",
+    "const1.y",
+    "fft_absoluteDomain1.y",
+    "multiSum.y",
+    "sine2.y",
+    "sine3.y",
+    "time"
+   ],
+   "bytes": 16004,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.0990693389903754,
+    "steps": 798,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInFixedWindow_withFFT_WithinRelativeDomain1",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInFixedWindow_withFFT.WithinRelativeDomain1",
+   "variables": [
+    "const.y",
+    "const1.y",
+    "fft_relativeDomain1.y",
+    "multiSum.y",
+    "sine2.y",
+    "sine3.y",
+    "time"
+   ],
+   "bytes": 16119,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.10172260901890695,
+    "steps": 798,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_BandAccumulatedDuration",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.BandAccumulatedDuration",
+   "variables": [
+    "bandAccDuration.y",
+    "check.realToBoolean.y",
+    "check.y",
+    "time"
+   ],
+   "bytes": 3072,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.044832334970124066,
+    "steps": 531,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 8,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_BandDuration",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.BandDuration",
+   "variables": [
+    "bandDuration.y",
+    "check.realToBoolean.y",
+    "check.y",
+    "time"
+   ],
+   "bytes": 2998,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.054833010013680905,
+    "steps": 530,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 8,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_BandRising",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.BandRising",
+   "variables": [
+    "bandRising.y",
+    "check.realToBoolean.y",
+    "check.y",
+    "time"
+   ],
+   "bytes": 3133,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.062049319967627525,
+    "steps": 546,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MaxAccumulatedDuration",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MaxAccumulatedDuration",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "maxAccDuration.y",
+    "time"
+   ],
+   "bytes": 3129,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04026732302736491,
+    "steps": 532,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 5,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MaxDuration",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MaxDuration",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "maxDuration1.y",
+    "time"
+   ],
+   "bytes": 3005,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04040425200946629,
+    "steps": 532,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 5,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MaxFrequency",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MaxFrequency",
+   "variables": [
+    "crossing.y",
+    "expr1.y",
+    "maxFrequency.y",
+    "time"
+   ],
+   "bytes": 36166,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.38618048100033775,
+    "steps": 4675,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 79,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MaxIncrease",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MaxIncrease",
+   "variables": [
+    "maxIncrease.y",
+    "time"
+   ],
+   "bytes": 2423,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04999156796839088,
+    "steps": 516,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 2,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MaxPercentageIncrease",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MaxPercentageIncrease",
+   "variables": [
+    "maxIncrease1.y",
+    "time"
+   ],
+   "bytes": 2387,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.037937864020932466,
+    "steps": 514,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 2,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MaxRising",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MaxRising",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "maxRising.y",
+    "time"
+   ],
+   "bytes": 3125,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04565977200400084,
+    "steps": 539,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MaxRisingFrequency",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MaxRisingFrequency",
+   "variables": [
+    "crossing.y",
+    "expr1.y",
+    "maxRisingFrequency.y",
+    "time"
+   ],
+   "bytes": 36292,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.3867928729741834,
+    "steps": 4643,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 79,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MinAccumulatedDuration",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MinAccumulatedDuration",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "minAccDuration.y",
+    "time"
+   ],
+   "bytes": 2944,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04283173900330439,
+    "steps": 528,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 6,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MinAccumulatedDuration2",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MinAccumulatedDuration2",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "minAccDuration.y",
+    "time"
+   ],
+   "bytes": 3081,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04204141499940306,
+    "steps": 528,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 6,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MinDuration",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MinDuration",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "minDuration.y",
+    "time"
+   ],
+   "bytes": 3014,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04890783398877829,
+    "steps": 528,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 6,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_ChecksInSlidingWindow_MinRising",
+   "model": "Modelica_Requirements.Examples.Elementary.ChecksInSlidingWindow.MinRising",
+   "variables": [
+    "check.realToBoolean.y",
+    "check.y",
+    "minRising.y",
+    "time"
+   ],
+   "bytes": 3060,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04955996002536267,
+    "steps": 535,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_LogicalBlocks_AllTrue",
+   "model": "Modelica_Requirements.Examples.Elementary.LogicalBlocks.AllTrue",
+   "variables": [
+    "allTrue1.y",
+    "booleanPulse.y",
+    "booleanStep.y",
+    "const1.y",
+    "time"
+   ],
+   "bytes": 2574,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.029523564968258142,
+    "steps": 507,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_LogicalBlocks_AnyTrue",
+   "model": "Modelica_Requirements.Examples.Elementary.LogicalBlocks.AnyTrue",
+   "variables": [
+    "anyTrue1.y",
+    "booleanPulse.y",
+    "booleanStep.y",
+    "const1.y",
+    "time"
+   ],
+   "bytes": 2545,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.02927996905054897,
+    "steps": 507,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_LogicalBlocks_Conversions",
+   "model": "Modelica_Requirements.Examples.Elementary.LogicalBlocks.Conversions",
+   "variables": [
+    "BtoP1.y",
+    "ItoP1.y",
+    "PtoB1.y",
+    "PtoB2.y",
+    "PtoI1.y",
+    "booleanTable.realToBoolean.y",
+    "booleanTable.y",
+    "integerTable.realToInteger.y",
+    "integerTable.y",
+    "time"
+   ],
+   "bytes": 3839,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.040450541011523455,
+    "steps": 508,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_LogicalBlocks_DelayedRising",
+   "model": "Modelica_Requirements.Examples.Elementary.LogicalBlocks.DelayedRising",
+   "variables": [
+    "delayedRising1.y",
+    "time",
+    "timeTable.realToBoolean.y",
+    "timeTable.y"
+   ],
+   "bytes": 2881,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.036374252988025546,
+    "steps": 517,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_LogicalBlocks_PropertyAnd",
+   "model": "Modelica_Requirements.Examples.Elementary.LogicalBlocks.PropertyAnd",
+   "variables": [
+    "and1.y",
+    "p1.ItoP.y",
+    "p1.integerTable.realToInteger.y",
+    "p1.integerTable.y",
+    "p1.y",
+    "p2.ItoP.y",
+    "p2.integerTable.realToInteger.y",
+    "p2.integerTable.y",
+    "p2.y",
+    "p3.ItoP.y",
+    "p3.integerTable.realToInteger.y",
+    "p3.integerTable.y",
+    "p3.y",
+    "time"
+   ],
+   "bytes": 5536,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04464590299176052,
+    "steps": 518,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_LogicalBlocks_PropertyNot",
+   "model": "Modelica_Requirements.Examples.Elementary.LogicalBlocks.PropertyNot",
+   "variables": [
+    "not1.y",
+    "p.ItoP.y",
+    "p.integerTable.realToInteger.y",
+    "p.integerTable.y",
+    "p.y",
+    "time"
+   ],
+   "bytes": 3476,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.038350218965206295,
+    "steps": 510,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_LogicalBlocks_PropertyOr",
+   "model": "Modelica_Requirements.Examples.Elementary.LogicalBlocks.PropertyOr",
+   "variables": [
+    "or1.y",
+    "p1.ItoP.y",
+    "p1.integerTable.realToInteger.y",
+    "p1.integerTable.y",
+    "p1.y",
+    "p2.ItoP.y",
+    "p2.integerTable.realToInteger.y",
+    "p2.integerTable.y",
+    "p2.y",
+    "p3.ItoP.y",
+    "p3.integerTable.realToInteger.y",
+    "p3.integerTable.y",
+    "p3.y",
+    "time"
+   ],
+   "bytes": 5496,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.04515509103657678,
+    "steps": 518,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_LogicalBlocks_ThresholdComparisons",
+   "model": "Modelica_Requirements.Examples.Elementary.LogicalBlocks.ThresholdComparisons",
+   "variables": [
+    "band1.y",
+    "ge1.y",
+    "gt1.y",
+    "le1.y",
+    "lt1.y",
+    "sine.y",
+    "time"
+   ],
+   "bytes": 7047,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03784886299399659,
+    "steps": 518,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 12,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_SignalAnalysis_CrossingMonitoring",
+   "model": "Modelica_Requirements.Examples.Elementary.SignalAnalysis.CrossingMonitoring",
+   "variables": [
+    "crossingMon1.y",
+    "sine.y",
+    "time"
+   ],
+   "bytes": 6239,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.06426888797432184,
+    "steps": 513,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "state_events": 8,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_SignalAnalysis_Derivatives",
+   "model": "Modelica_Requirements.Examples.Elementary.SignalAnalysis.Derivatives",
+   "variables": [
+    "approxDerFilter.derExact.y",
+    "approxDerFilter.filter.y",
+    "approxDerFilter.y",
+    "approxDerWindow.y",
+    "der1.y",
+    "sine.y",
+    "time"
+   ],
+   "bytes": 25327,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03338404599344358,
+    "steps": 511,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_SignalAnalysis_Integrator",
+   "model": "Modelica_Requirements.Examples.Elementary.SignalAnalysis.Integrator",
+   "variables": [
+    "integrator1.y",
+    "pulse.y",
+    "sine.y",
+    "time"
+   ],
+   "bytes": 8659,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03475742303999141,
+    "steps": 519,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_SignalAnalysis_MovingAverage",
+   "model": "Modelica_Requirements.Examples.Elementary.SignalAnalysis.MovingAverage",
+   "variables": [
+    "movAv1.y",
+    "pulse.y",
+    "sine.y",
+    "time"
+   ],
+   "bytes": 8584,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.035829094995278865,
+    "steps": 512,
+    "error_test_failures": 1,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_SignalAnalysis_TimeMonitoring",
+   "model": "Modelica_Requirements.Examples.Elementary.SignalAnalysis.TimeMonitoring",
+   "variables": [
+    "booleanTable.realToBoolean.y",
+    "booleanTable.y",
+    "time",
+    "timeMon1.timer.y",
+    "timeMon1.y"
+   ],
+   "bytes": 6026,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.038417169998865575,
+    "steps": 510,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_Sources_ConstantsAndExpressions",
+   "model": "Modelica_Requirements.Examples.Elementary.Sources.ConstantsAndExpressions",
+   "variables": [
+    "const1.y",
+    "const2.y",
+    "const3.y",
+    "const4.y",
+    "expr1.y",
+    "expr2.y",
+    "expr3.y",
+    "time"
+   ],
+   "bytes": 6439,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03793330898042768,
+    "steps": 506,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_Sources_PropertyTable",
+   "model": "Modelica_Requirements.Examples.Elementary.Sources.PropertyTable",
+   "variables": [
+    "propertyTable.ItoP.y",
+    "propertyTable.integerTable.realToInteger.y",
+    "propertyTable.integerTable.y",
+    "propertyTable.y",
+    "time"
+   ],
+   "bytes": 3369,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03789041703566909,
+    "steps": 510,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_TimeLocators_After",
+   "model": "Modelica_Requirements.Examples.Elementary.TimeLocators.After",
+   "variables": [
+    "after1.y",
+    "after2.y",
+    "pulse1.y",
+    "pulse2.y",
+    "time"
+   ],
+   "bytes": 3122,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03105992602650076,
+    "steps": 514,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_TimeLocators_AfterFor",
+   "model": "Modelica_Requirements.Examples.Elementary.TimeLocators.AfterFor",
+   "variables": [
+    "afterFor.y",
+    "time",
+    "timeTable.realToBoolean.y",
+    "timeTable.y"
+   ],
+   "bytes": 2919,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.038014437013771385,
+    "steps": 518,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_TimeLocators_AfterUntil",
+   "model": "Modelica_Requirements.Examples.Elementary.TimeLocators.AfterUntil",
+   "variables": [
+    "afterUntil1.y",
+    "pulse1.y",
+    "pulse2.y",
+    "time"
+   ],
+   "bytes": 3000,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03282186802243814,
+    "steps": 521,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_TimeLocators_Every",
+   "model": "Modelica_Requirements.Examples.Elementary.TimeLocators.Every",
+   "variables": [
+    "every.y",
+    "time"
+   ],
+   "bytes": 2573,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03232897003181279,
+    "steps": 530,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_TimeLocators_Until",
+   "model": "Modelica_Requirements.Examples.Elementary.TimeLocators.Until",
+   "variables": [
+    "pulse1.y",
+    "pulse2.y",
+    "time",
+    "until1.y",
+    "until2.y"
+   ],
+   "bytes": 3114,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.031960190972313285,
+    "steps": 514,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_Elementary_Verify_Requirement",
+   "model": "Modelica_Requirements.Examples.Elementary.Verify.Requirement",
+   "variables": [
+    "BtoP1.y",
+    "check.realToBoolean.y",
+    "check.y",
+    "during1.y",
+    "propertyConstant.y",
+    "time"
+   ],
+   "bytes": 2830,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "atol": 9.999999999999999e-05,
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 0.03904726495966315,
+    "steps": 504,
+    "error_test_failures": 0,
+    "convergence_failures": 0,
+    "kind": "dynamic"
+   }
+  },
+  {
+   "name": "MR_Examples_SimplePumpingSystem_Components_PumpingSystem",
+   "model": "Modelica_Requirements.Examples.SimplePumpingSystem.Components.PumpingSystem",
+   "variables": [
+    "PT1.y",
+    "PumpRPMGenerator.y",
+    "RelativePressureSetPoint.y",
+    "controller.y",
+    "time",
+    "valveOpening.y"
+   ],
+   "bytes": 19835,
+   "metrics": {
+    "solver": "CVode",
+    "linear_multistep_method": "BDF",
+    "nonlinear_solver": "Newton",
+    "linear_solver_type": "DENSE",
+    "rtol": 9.999999999999999e-05,
+    "cpu_time": 1.6297168050077744,
+    "steps": 5360,
+    "error_test_failures": 42,
+    "convergence_failures": 10,
+    "state_events": 21,
+    "kind": "dynamic"
+   }
+  }
+ ]
+}

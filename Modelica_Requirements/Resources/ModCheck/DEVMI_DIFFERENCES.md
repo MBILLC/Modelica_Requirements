@@ -164,7 +164,17 @@ cannot build any FFT check (`lowerWhenEqn: equation not handled`).
   `output Integer result(start=0)`, `Inline=false`. A `start` attribute on a
   function output is not how a function result is initialised, and the array
   reduction is standard Modelica — this works around a compiler, not the
-  language.
+  language. The compiler problem is real, though: Impact still fails
+  *"Exception caught while scalarizing function
+  'Modelica_Requirements.LogicalFunctions.cardSatisfied'"* on the
+  element-iterator form, which took `AircraftRequirements.
+  MinimumOperationalServiceLife` down with it (2026-09-14). Measured with a
+  three-function test package: the reduction over **indices**,
+  `sum(if p[i] == Property.Satisfied then 1 else 0 for i in 1:size(p, 1))`,
+  compiles and gives the right count, as does DevMI's loop. This fork uses
+  the index form in all four functions — one token of change, `Inline=true`
+  kept, no `start` on an output; Dymola and OpenModelica results for the
+  five cases that reach these functions are unchanged (39/39 checks each).
 * Documentation links `modelica://Requirements.X` shortened to `Requirements.X`
   in `LogicalFunctions`, `ChecksInFixedWindow*`, `Verify`, `Elementary` —
   breaks the `modelica://` URI scheme every other tool resolves.
@@ -190,7 +200,16 @@ cannot build any FFT check (`lowerWhenEqn: equation not handled`).
   instance to a function. DevMI's comment: *"Same (stupid) issue as with pump
   system: passing classes instead of records. doh!"* OpenModelica 1.27.1
   refuses both with a type mismatch; Dymola accepts them (and then refuses
-  both under its license cap, so neither tool actually ran them here).
+  both under its license cap, so neither tool actually ran them here), and
+  Modelon Impact does not compile them either. Legality (checked 2026-09-14):
+  the Modelica Language Specification 3.6, section 12.6.1 -- unchanged in the
+  3.7/3.8 drafts -- allows a model instance as a record argument only through
+  an **explicit** record constructor call, `R(m)`, which copies the public
+  components whose names match; the implicit form the library uses is a
+  Dymola extension. Making the two examples legal means wrapping the
+  arguments (`watchDCMotor(obj=MotorData(dcpm1))` and the like) and moving
+  the record types (`MotorData`, `InertiaData`) out of the functions'
+  protected sections so the models can name them. Left as is on this branch.
 * **The FFT checks** are the hardest corner for every tool: Impact (per
   DevMI's README), OpenModelica (*"lowerWhenEqn: equation not handled"*), and
   Dymola's license for four of the six examples.
