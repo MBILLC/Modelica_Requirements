@@ -17,6 +17,17 @@ each list — `SimplePumpingSystem.Components.PumpingSystem`, an on-off pressure
 controller over 2000 s whose switching instants move with tolerance; its relay
 signals are checked by accumulated |difference| at a measured tolerance.
 
+## Modelon Impact
+
+The fork's library (upstream's sliding-window refactor, `uses Modelica 4.1.0`)
+imports into an Impact workspace as a project and its sliding-window examples
+run there with results matching the Dymola baseline — see
+`DEVMI_DIFFERENCES.md` §2 for the measurement. Impact evaluates `terminal()`
+to `false`, so a requirement model there needs
+`printViolations(useEvaluationTime=true)` to print its verdict; every example
+carries `evaluationTime = StopTime` for that purpose. The FFT checks do not
+compile in Impact (`checkDomain`, "variables with undefined size").
+
 ## OpenModelica vs Dymola
 
 `cross_engine_openmodelica_vs_dymola.txt` is the comparison of the **45 cases

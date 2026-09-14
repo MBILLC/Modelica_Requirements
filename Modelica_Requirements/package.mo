@@ -114,7 +114,7 @@ is simulated.
 end UsersGuide;
 
   annotation (preferredView="info",
-  uses(Modelica(version="4.0.0")),
+  uses(Modelica(version="4.1.0")),
 version="0.7",
 versionDate="2025-02-13",
 dateModified = "2025-02-13",

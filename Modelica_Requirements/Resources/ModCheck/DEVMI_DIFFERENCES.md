@@ -58,9 +58,22 @@ code generation — *"No runtime support for this record assignment:
 `<block>.buffer = SlidingWindow.push(…)`"* — so upstream's refactor fixed
 Dymola and not omc. DevMI's variant was not tried in omc; its `buffer_temp`
 assignment is the same record-from-function pattern and is unlikely to fare
-better. **Keep upstream's form; drop DevMI's debugging prints.** If Impact still
-misbehaves on upstream's version, that is the finding to file — with a
-minimal model — rather than the `buffer_temp` workaround.
+better.
+
+**Measured in Modelon Impact (2026-09-14), on this fork — upstream's refactor
+plus MSL 4.1.0:** every sliding-window example compiles and runs, and the
+results match the Dymola baseline. All 14 were run (`impact_compare.py`,
+client API) and compared on the `ncp` grid: 13 have a Dymola baseline
+(`BackupPowerSupply` is over Dymola's license cap) and all 13 have identical
+switch instants for every `*.y`, with at most one grid point different, at an
+event instant. What is left is not a buffer error: `MaxIncrease` and
+`MaxPercentageIncrease` cross their thresholds 3–20 ms apart (event location
+on a continuous signal), and `MaxRisingFrequency` in Impact carries zero-
+duration `0→1→0` samples at each new rising edge inside the violated window
+— Impact stores the event iteration's intermediate value, Dymola does not; the
+value held between events is the same. So the "erroneous results" DevMI was
+debugging belong to its own `buffer_temp` variant, not to the library.
+**Keep upstream's form.**
 
 ## 3. `terminal()` — the Impact-specific change worth keeping as an option
 
@@ -78,10 +91,19 @@ the requirements needing FFTs"*). DevMI replaces it in two places:
 This changes semantics — the requirement's final verdict is taken at a fixed
 instant instead of at the end of the simulation, and `evaluationTime = 1`
 silently misreports any experiment that stops later — so it cannot go
-upstream as is. As an opt-in (`evaluationTime = -1` meaning "at `terminal()`",
-say) it would be a reasonable portability knob. Note Dymola and OpenModelica
-both handle upstream's `terminal()` (measured: the `Verify.Requirement` example
-passes on both).
+upstream as is. **Ported to this fork as an opt-in (2026-09-14):**
+`PrintViolations` (and `PartialVerify`) gained `useEvaluationTime = false`
+and `evaluationTime`; `PartialRequirements` reads both from the `inner`
+instance rather than carrying its own; every example sets
+`evaluationTime` to its own `StopTime` (`CheckAirCircuitSystem` has no
+`experiment()` and keeps the default). Default off, so Dymola and OpenModelica
+keep `terminal()` and their ModCheck baselines still pass. Measured in Impact
+on `Verify.Requirement`: with the default the run succeeds and prints **no
+verdict** — Impact reports *"The terminal() operator is not supported, and is
+currently evaluated to false"*; with `printViolations.useEvaluationTime=true`
+the full report appears at 5 s (50 % satisfied, 1 violated, 1 untested). The
+FFT checks additionally fail to compile in Impact (`checkDomain`: "Using
+variables with undefined size is not supported"), independent of `terminal()`.
 
 ## 4. Impact-specific workarounds that should not survive a merge
 
@@ -127,7 +149,7 @@ Do not merge `DevMI` as a branch. Rebase the two things worth keeping onto
 upstream `master`:
 
 1. an **opt-in `evaluationTime`** for tools without `terminal()` (§3), default
-   off;
+   off — done on this fork's `modcheck-baseline` branch;
 2. the Impact **experiment definitions and Views** (the `.json` files) — if a
    Modelon Impact workspace for the library is wanted — under
    `Resources/Impact/` rather than beside the models, and without `.impact/`.

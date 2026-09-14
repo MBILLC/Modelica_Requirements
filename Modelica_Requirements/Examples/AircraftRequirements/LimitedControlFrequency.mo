@@ -17,7 +17,7 @@ model LimitedControlFrequency
 of the valve should not exceed 1.5 Hz
 during more than 2 seconds")
     annotation (Placement(transformation(extent={{2,10},{62,30}})));
-  inner Modelica_Requirements.Verify.PrintViolations printViolations
+  inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=8)
     annotation (Placement(transformation(extent={{-80,12},{-60,32}})));
 equation
   connect(meanFreq.y, requirement.u) annotation (Line(points={{-11,20},{-11,20},

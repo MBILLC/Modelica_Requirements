@@ -4,7 +4,7 @@ model MinimumAirDistributionPerformance
    extends Modelica.Icons.Example;
    import Modelica_Requirements.LogicalFunctions.*;
 
-  inner Modelica_Requirements.Verify.PrintViolations printViolations
+  inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=3)
     annotation (Placement(transformation(extent={{-88,20},{-68,40}})));
   Modelica_Requirements.Verify.Requirement Requirement_AirCircuitOneEngine(text="In flight, with only one engine 
 running, the air distribution circuit 

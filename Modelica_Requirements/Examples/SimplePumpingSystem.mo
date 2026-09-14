@@ -7,7 +7,7 @@ package SimplePumpingSystem
     extends
       Modelica_Requirements.Examples.SimplePumpingSystem.Components.PumpingSystem;
 
-    inner Verify.PrintViolations printViolations(printSatisfied=true)
+    inner Verify.PrintViolations printViolations(printSatisfied=true, evaluationTime=2000)
       annotation (Placement(transformation(extent={{120,80},{140,100}})));
 
     SimplePumpingSystem.Components.Requirements.TankRequirements tankRequirements(

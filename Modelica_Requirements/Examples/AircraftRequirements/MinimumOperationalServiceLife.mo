@@ -4,7 +4,7 @@ model MinimumOperationalServiceLife
    extends Modelica.Icons.Example;
    import Modelica_Requirements.LogicalFunctions.*;
 
-  inner Modelica_Requirements.Verify.PrintViolations printViolations
+  inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=1e+007)
     annotation (Placement(transformation(extent={{-84,-6},{-64,14}})));
   Modelica_Requirements.Verify.Requirement R_OpLife(text="The aircraft shall be designed for an
 operational service life of 150 flight

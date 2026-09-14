@@ -5,7 +5,7 @@ package BackupPowerSupply
     model MainPowerSupplyRequirements
     "Evaluating the requirement definitions for the Main Power Supply system"
     extends Modelica.Icons.Example;
-    inner Verify.PrintViolations printViolations(printSatisfied=true)
+    inner Verify.PrintViolations printViolations(printSatisfied=true, evaluationTime=70)
       annotation (Placement(transformation(extent={{40,60},{60,80}})));
 
     Modelica.Blocks.Sources.CombiTimeTable MPSVoltageTable(table=[0,240; 10,

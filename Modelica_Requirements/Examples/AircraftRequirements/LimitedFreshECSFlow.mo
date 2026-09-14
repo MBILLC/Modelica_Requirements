@@ -4,7 +4,7 @@ model LimitedFreshECSFlow
    extends Modelica.Icons.Example;
    import Modelica_Requirements.LogicalFunctions.*;
 
-  inner Modelica_Requirements.Verify.PrintViolations printViolations
+  inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=10)
     annotation (Placement(transformation(extent={{-88,74},{-68,94}})));
   Modelica_Requirements.Verify.Requirement R_FreshECSFlow(text="The fresh airflow entering the pressurized
 area (including air dedicated to equipment

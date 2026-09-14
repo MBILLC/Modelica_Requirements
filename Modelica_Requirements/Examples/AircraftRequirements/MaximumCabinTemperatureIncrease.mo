@@ -4,7 +4,7 @@ model MaximumCabinTemperatureIncrease
    extends Modelica.Icons.Example;
    import Modelica_Requirements.LogicalFunctions.*;
 
-  inner Modelica_Requirements.Verify.PrintViolations printViolations
+  inner Modelica_Requirements.Verify.PrintViolations printViolations(evaluationTime=10800)
     annotation (Placement(transformation(extent={{-80,10},{-60,30}})));
   Verify.BooleanRequirement                R_TCabin(text="In the cabin area, the temperature
 increase should not exceed 3°C
